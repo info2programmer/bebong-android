@@ -6,6 +6,7 @@ var phonegapApp = {
   
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+        document.addEventListener("offline", this.onOffline, false);
     },
     
     onDeviceReady: function() {
@@ -29,5 +30,14 @@ var phonegapApp = {
       else{
 
       }
-    }
+    },
+
+    // On Device Offline
+    onOffline: function() {
+      app.loginScreen.close("#my-login-screen");
+      app.loginScreen.close("#my-forgot-password-screen");
+      app.loginScreen.open("#no-internet");
+      app.preloader.hide();
+    },
+    
 };

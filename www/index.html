@@ -584,13 +584,15 @@
     </div>
 
     <!-- No Internet Connection -->
-    <div class="login-screen" id="my-forgot-password-screen">
+    <div class="login-screen" id="no-internet">
         <div class="view">
           <div class="page color-theme-red">
             <div class="page-content login-screen-content">
               <div style="margin-top:36px">
-                <img src="img/forgot-password.jpg" alt="" class="fullWidth" />
+                <img src="img/no-internet.jpg" alt="" class="fullWidth" />
               </div>
+              <p class="text-align-center text-color-red">Opps ! <br>No Internet Connection Detacted</p>
+              <p class="text-align-center" style="padding: 35px;"><button class="col button button-outline button-round" onclick="navigator.app.exitApp();">Exit</button></p>
             </div>
           </div>
         </div>
