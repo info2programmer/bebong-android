@@ -31,6 +31,17 @@ var app  = new Framework7({
   },
 });
 
+// create searchbar
+var searchbar = app.searchbar.create({
+  el: '.searchbar',
+  searchContainer: '.list',
+  searchIn: '.item-title',
+  on: {
+    search(sb, query, previousQuery) {
+      console.log(query, previousQuery);
+    }
+  }
+});
 
 
 // Init/Create left panel view
