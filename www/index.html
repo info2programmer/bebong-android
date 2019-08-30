@@ -173,7 +173,7 @@
         <!-- Toolbar footer-->
         <div class="toolbar toolbar-bottom">
           <div class="toolbar-inner">
-            <a href="/#/" class="link  color-red" title="Home"><i class="icon material-icons-outlined">home</i></a>
+            <a href="/" class="link  color-red" title="Home"><i class="icon material-icons-outlined">home</i></a>
             <a href="/profile/" class="link  color-red" title="Profile"><i class="material-icons-outlined">account_circle</i></a> 
             <a href="#" class="link  color-red" title="Search"><i class="material-icons-outlined">search</i></a>
             <a href="#" class="link  color-red" title="Search"><i class="material-icons-outlined">favorite_border</i></a>
@@ -492,16 +492,23 @@
     <!-- Login Screen -->
     <div class="login-screen" id="my-login-screen">
       <div class="view">
-        <div class="page">
+        <div class="page color-theme-red">
           <div class="page-content login-screen-content">
+            <div>
+              <img src="img/login-image.jpg" alt="" class="fullWidth" />
+            </div>
             <div class="login-screen-title">Login</div>
             <div class="list">
               <ul>
                 <li class="item-content item-input">
                   <div class="item-inner">
-                    <div class="item-title item-label">Username</div>
+                    <div class="item-title item-label">Email</div>
                     <div class="item-input-wrap">
-                      <input type="text" name="username" placeholder="Your username">
+                      <input
+                        type="email"
+                        placeholder="Your email"
+                        id="txtEmail"
+                      />
                     </div>
                   </div>
                 </li>
@@ -509,7 +516,11 @@
                   <div class="item-inner">
                     <div class="item-title item-label">Password</div>
                     <div class="item-input-wrap">
-                      <input type="password" name="password" placeholder="Your password">
+                      <input
+                        type="password"
+                        placeholder="Your password"
+                        id="txtPassword"
+                      />
                     </div>
                   </div>
                 </li>
@@ -518,10 +529,55 @@
             <div class="list">
               <ul>
                 <li>
-                  <a href="#" class="item-link list-button login-button">Sign In</a>
+                  <a
+                    href="#"
+                    class="item-link list-button"
+                    
+                    >Login</a
+                  >
                 </li>
               </ul>
-              <div class="block-footer">Some text about login information.<br>Click "Sign In" to close Login Screen</div>
+            </div>
+            <div class="text-align-center">
+              <a href="" class="link" onclick=phonegapApp.opneForgotPasswordModal(1)>Forgot Password?</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="login-screen" id="my-forgot-password-screen">
+      <div class="view">
+        <div class="page color-theme-red">
+          <div class="page-content login-screen-content">
+            <div>
+              <img src="img/login-image.jpg" alt="" class="fullWidth" />
+            </div>
+            <div class="list">
+              <ul>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">Email</div>
+                    <div class="item-input-wrap">
+                      <input
+                        type="email"
+                        placeholder="Your email"
+                        id="txtForgotEmail"
+                      />
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="list">
+              <ul>
+                <li>
+                  <a
+                    href="#"
+                    class="item-link list-button"
+                    >Get Password</a
+                  >
+                </li>
+              </ul>
             </div>
           </div>
         </div>

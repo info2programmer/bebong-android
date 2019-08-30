@@ -26,9 +26,12 @@ var app  = new Framework7({
   routes: routes,
   // Enable panel left visibility breakpoint
   panel: {
+    swipe: 'left',
     leftBreakpoint: 960,
   },
 });
+
+
 
 // Init/Create left panel view
 var leftView = app.views.create('.view-left', {
