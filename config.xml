@@ -15,7 +15,7 @@
     <preference name="Orientation" value="portrait" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarStyle" value="lightcontent" />
-    <preference name="StatusBarBackgroundColor" value="#0c83c8" />
+    <preference name="StatusBarBackgroundColor" value="#D20000" />
     <preference name="phonegap-version" value="cli-8.0.0" />
     <preference name="SplashScreenDelay" value="6000" />
     <preference name="AutoHideSplashScreen" value="true" />
