@@ -22,13 +22,20 @@ var phonegapApp = {
     },
 
     // This Section For Forgot Password Link
-    opneForgotPasswordModal : function(param){
-      if(param){
+    opneForgotPasswordModal : function(){
+      app.loginScreen.close("#my-login-screen");
+      app.loginScreen.open("#my-forgot-password-screen");
+    },
+
+    // This Function For Toogle Register Modal
+    toogleRegister : function(switech){
+      if(switech === 1){
         app.loginScreen.close("#my-login-screen");
-        app.loginScreen.open("#my-forgot-password-screen");
+        app.loginScreen.open("#register-screen");
       }
       else{
-
+        app.loginScreen.open("#my-login-screen");
+        app.loginScreen.close("#register-screen");
       }
     },
 
