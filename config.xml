@@ -2,23 +2,25 @@
 <widget id="com.bebongstore.userapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Bebong</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Comfort | Creativity | Culture
     </description>
     <author email="saikat.projukti@gmail.com" href="https://projukti.info">
         Projukti Team
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="false" />
-    <preference name="android-minSdkVersion" value="19" />
+    <preference name="android-minSdkVersion" value="14" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <preference name="Fullscreen" value="false" />
     <preference name="Orientation" value="portrait" />
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="StatusBarStyle" value="lightcontent" />
     <preference name="StatusBarBackgroundColor" value="#0c83c8" />
-    <preference name="phonegap-version" value="cli-9.0.0" />
+    <preference name="phonegap-version" value="cli-8.0.0" />
+    <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <preference name="SplashScreenDelay" value="6000" />
     <preference name="AutoHideSplashScreen" value="true" />
+    <preference name="AndroidExtraFilesystems" value="files,files-external,documents,sdcard,cache,cache-external,assets,root" />
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />
         <icon density="mdpi" src="www/res/icon/android/drawable-mdpi-icon.png" />
