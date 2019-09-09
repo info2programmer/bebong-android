@@ -530,9 +530,9 @@
               <ul>
                 <li class="item-content item-input">
                   <div class="item-inner">
-                    <div class="item-title item-label">Email</div>
+                    <div class="item-title item-label">Mobile</div>
                     <div class="item-input-wrap">
-                      <input type="email" placeholder="Your email" id="txtEmail" />
+                      <input type="tel" placeholder="Your Mobile Number" id="txtMobileLogin" />
                     </div>
                   </div>
                 </li>
@@ -549,7 +549,7 @@
             <div class="list">
               <ul>
                 <li style="padding-left: 25px;padding-right: 25px;">
-                  <button class="col button button-outline button-round">Login</button>
+                  <button class="col button button-outline button-round" onclick="phonegapApp.handelLogin()">Login</button>
                 </li>
               </ul>
             </div>
@@ -588,7 +588,7 @@
             <div class="list">
               <ul>
                 <li>
-                  <a href="#" class="item-link list-button">Get Password</a>
+                  <a href="javascript:void(0)" onclick="phonegapApp.handelForgotPassword()" class="item-link list-button">Get Password</a>
                 </li>
               </ul>
             </div>
@@ -614,7 +614,7 @@
                       <div class="item-inner">
                         <div class="item-title item-label">Full Name</div>
                         <div class="item-input-wrap">
-                          <input type="text" placeholder="Your Full Name" />
+                          <input type="text" placeholder="Your Full Name" id="txtFullName" />
                         </div>
                       </div>
                     </div>
@@ -624,7 +624,7 @@
                       <div class="item-inner">
                         <div class="item-title item-label">E-mail Address</div>
                         <div class="item-input-wrap">
-                          <input type="email" placeholder="E-mail Address" />
+                          <input type="email" placeholder="E-mail Address" id="txtEmailAddress" />
                         </div>
                       </div>
                     </div>
@@ -635,7 +635,7 @@
                       <div class="item-inner">
                         <div class="item-title item-label">Mobile Number</div>
                         <div class="item-input-wrap">
-                          <input type="tel" placeholder="Mobile Number" />
+                          <input type="tel" placeholder="Mobile Number"  id="txtMobileNumber"/>
                         </div>
                       </div>
                     </div>
@@ -646,7 +646,7 @@
                       <div class="item-inner">
                         <div class="item-title item-label">Set Password</div>
                         <div class="item-input-wrap">
-                          <input type="password" placeholder="Set Password" />
+                          <input type="password" placeholder="Set Password" id="txtRegisterPassword" />
                         </div>
                       </div>
                     </div>
@@ -656,27 +656,18 @@
                       <div class="item-inner">
                         <div class="item-title item-label">Shipping Address</div>
                         <div class="item-input-wrap">
-                          <input type="text" placeholder="Shipping Address" />
+                          <input type="text" placeholder="Shipping Address" id="txtShippingAddress" />
                         </div>
                       </div>
                     </div>
                   </li>
-                  <li>
-                    <div class="item-content item-input">
-                      <div class="item-inner">
-                        <div class="item-title item-label">Locality</div>
-                        <div class="item-input-wrap">
-                          <input type="text" placeholder="Locality" />
-                        </div>
-                      </div>
-                    </div>
-                  </li>
+                  
                   <li>
                     <div class="item-content item-input">
                       <div class="item-inner">
                         <div class="item-title item-label">Pincode</div>
                         <div class="item-input-wrap">
-                          <input type="number" placeholder="Pincode" />
+                          <input type="number" placeholder="Pincode" id="txtPincode"/>
                         </div>
                       </div>
                     </div>
@@ -686,7 +677,7 @@
                       <div class="item-inner">
                         <div class="item-title item-label">Where It Is ?</div>
                         <div class="item-input-wrap">
-                          <select>
+                          <select id="ddlAddressType">
                             <option value="" selected="selected" disabled="disabled">Tap Here</option>
                             <option value="Home">Home</option>
                             <option value="Work">Work</option>
@@ -698,7 +689,7 @@
                 </ul>
               </div>
 
-              <a href="/payment/" class="col button button-fill">Sign Up Now</a>
+              <button onclick="phonegapApp.handelRegister()" class="col button button-fill">Sign Up Now</button>
               <p class="text-align-center"><a class="link" onclick=phonegapApp.toogleRegister(0)>Already Have Account? Login Here</a></p> 
 
             </div>
@@ -739,6 +730,7 @@
 
   <!-- Your custom app scripts -->
   <script src="js/app.js"></script>
+  <script src="js/jquery.min.js"></script>
   <script type="text/javascript" src="js/index.js"></script>
   <script type="text/javascript">
     phonegapApp.initialize();

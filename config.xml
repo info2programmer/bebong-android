@@ -69,4 +69,5 @@
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-statusbar" />
     <plugin name="cordova-plugin-whitelist" />
+    <plugin name="cordova-plugin-fcm-with-dependecy-updated" />
 </widget>
