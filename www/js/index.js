@@ -177,8 +177,8 @@ var phonegapApp = {
       let slider = ''
       for (list in rply.category) {
         slider += `<div class="swiper-slide text-align-center">
-                    <a href="/product-listing/${rply.category[list].cat_id}/" class="color-black"><img src="
-                    https://www.bebongstore.com/uploads/maincategory/${rply.category[list].cat_image}" style="width:100%;"><br><span style="font-weight:900;">${rply.category[list].cat_name}</span>
+                    <img src="
+                    https://www.bebongstore.com/uploads/maincategory/${rply.category[list].cat_image}" style="width:100%;"><br><span style="font-weight:900;"><a href="/product-listing/${rply.category[list].cat_id}/" class="color-black">${rply.category[list].cat_name}</span>
                     </a>
                   </div>`
       }
@@ -245,6 +245,49 @@ var phonegapApp = {
       }
       $('#bebongExclusive').html(bebongExclusive);
     });
-  }
+  },
+
+  // This Function For Category Product Items
+  categoryProducts : function(categoryId){
+    $.ajax({
+      type: "post",
+      url: url + "categoryProduct",
+      data: {categoryId : categoryId},
+      dataType: "json",
+      beforeSend: function () {
+        app.preloader.show('multi')
+      }
+    }).done(rply=>{
+      $('#lblProductCount').html(rply.productCount);
+      if(rply.product.length>0){
+        $('#productMsg').hide();
+
+        let productList = ''
+        for(list in rply.product){
+          productList += `<div class="col-50">
+          <a href="/product-details/" class="color-black"
+            ><img
+              src="https://www.bebongstore.com/bebong2019/uploads/product/${rply.product[list].gallery_image}"
+              style="width:100%; border-radius:4px;"
+            /><br />
+            <span style="font-size:12px;">${rply.product[list].name}</span><br />
+            <p style="font-size:12px; font-weight:900; margin-top: -2px;">
+              Rs. ${rply.product[list].discounted_price}&nbsp;&nbsp;<span
+                style="text-decoration:line-through; color:#999999; font-size:12px;"
+                >Rs. ${rply.product[list].price}</span
+              >
+            </p></a>
+        </div>`
+        }
+        $('#productsList').html(productList);
+
+        return
+      }
+      else{
+        $('#productMsg').html(`No Product Found`);
+      }
+      app.preloader.hide()
+    });
+  } 
 
 };

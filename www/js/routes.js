@@ -44,7 +44,7 @@ routes = [
     url: './pages/product-details.html',
   },
   {
-    path: '/product-listing/:categoryId',
+    path: '/product-listing/:categoryId/',
     async: function (routeTo, routeFrom, resolve, reject) {
       // Router instance
       var router = this;
@@ -60,10 +60,8 @@ routes = [
 
       // Simulate Ajax Request
       setTimeout(function () {
-        console.log(categoryId)
+        phonegapApp.categoryProducts(categoryId)
         app.preloader.hide();
-
-        // Resolve route to load page
         resolve(
           {
             componentUrl: './pages/product-listing.html',
