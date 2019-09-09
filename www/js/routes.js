@@ -44,8 +44,33 @@ routes = [
     url: './pages/product-details.html',
   },
   {
-    path: '/product-listing/',
-    url: './pages/product-listing.html',
+    path: '/product-listing/:categoryId',
+    async: function (routeTo, routeFrom, resolve, reject) {
+      // Router instance
+      var router = this;
+
+      // App instance
+      var app = router.app;
+
+      // Show Preloader
+      app.preloader.show('multi');
+
+      // User ID from request
+      var categoryId = routeTo.params.categoryId;
+
+      // Simulate Ajax Request
+      setTimeout(function () {
+        console.log(categoryId)
+        app.preloader.hide();
+
+        // Resolve route to load page
+        resolve(
+          {
+            componentUrl: './pages/product-listing.html',
+          }
+        );
+      }, 1000);
+    },
   },
   {
     path: '/cart1/',

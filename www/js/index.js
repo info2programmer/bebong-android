@@ -177,7 +177,7 @@ var phonegapApp = {
       let slider = ''
       for (list in rply.category) {
         slider += `<div class="swiper-slide text-align-center">
-                    <a href="/category/${rply.category[list].cat_id}" class="color-black"><img src="
+                    <a href="/product-listing/${rply.category[list].cat_id}/" class="color-black"><img src="
                     https://www.bebongstore.com/uploads/maincategory/${rply.category[list].cat_image}" style="width:100%;"><br><span style="font-weight:900;">${rply.category[list].cat_name}</span>
                     </a>
                   </div>`
