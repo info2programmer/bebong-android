@@ -54,6 +54,7 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <resource-file src="google-services.json" target="app/google-services.json" />
     </platform>
     <plugin name="cordova-plugin-battery-status" spec="~1.2.4" />
     <plugin name="cordova-plugin-camera" spec="~2.4.1" />
