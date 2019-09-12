@@ -8,331 +8,202 @@
 						<span class="ios-only">Back</span>
 					</a>
 				</div>
-				<div class="title">MEN - T-Shirts</div>
+				<div class="title" id="lblCategoryName"></div>
 			</div>
 		</div>
 
 		<div class="page-content hide-navbar-on-scroll">
-			<div
-				class="block block-strong"
-				style="margin-top:0px; margin-bottom:0px; font-size:11px; text-align:center; padding-bottom: 10px; padding-top: 10px;"
-			>
+			<div class="block block-strong"
+				style="margin-top:0px; margin-bottom:0px; font-size:11px; text-align:center; padding-bottom: 10px; padding-top: 10px;">
 				<div class="row">
 					<div class="col-25">
-						<a href="#" class="color-red popup-open" data-popup="#my-popup1"
-							>SORT</a
-						>
+						<a href="#" class="color-red popup-open" data-popup="#my-popup1">SORT</a>
 					</div>
-					<!-- Popup -->
-					<div class="popup" id="my-popup1">
-						<div class="view">
-							<div class="page">
-								<div class="navbar">
-									<div class="navbar-inner">
-										<div class="title">Sort By</div>
-										<div class="right">
-											<a href="#" class="link popup-close color-red"
-												><i class="material-icons">cancel</i></a
-											>
-										</div>
-									</div>
-								</div>
-								<div class="page-content">
-									<div class="list" style="font-size:12px;">
-										<ul>
-											<li>
-												<label class="item-radio item-content">
-													<input
-														type="radio"
-														name="demo-radio"
-														value="Low to High Price"
-													/>
-													<i class="icon icon-radio"></i>
-													<div class="item-inner">
-														<div class="item-title">Price Low to High</div>
-													</div>
-												</label>
-											</li>
-											<li>
-												<label class="item-radio item-content">
-													<input
-														type="radio"
-														name="demo-radio"
-														value="High to Low Price"
-													/>
-													<i class="icon icon-radio"></i>
-													<div class="item-inner">
-														<div class="item-title">Price High to Low</div>
-													</div>
-												</label>
-											</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Popup -->
+
 					<div class="col-50"><span id="lblProductCount"></span> Products</div>
 					<div class="col-25">
-						<a href="#" class="color-red popup-open" data-popup="#my-popup2"
-							>FILTER</a
-						>
+						<a href="#" class="color-red popup-open" data-popup="#my-popup2">FILTER</a>
 					</div>
 					<!-- Popup -->
-					<div class="popup" id="my-popup2">
-						<div class="view">
-							<div class="page">
-								<div class="navbar">
-									<div class="navbar-inner">
-										<div class="title">FILTER BY</div>
-										<div class="right">
-											<a href="#" class="link popup-close color-red"
-												><i class="material-icons">cancel</i></a
-											>
+					<form id="filetrForm" method="post">
+						<input type="hidden" name="cat_id" value="" id="txtcategoryId">
+						<div class="popup" id="my-popup1">
+							<div class="view">
+								<div class="page">
+									<div class="navbar">
+										<div class="navbar-inner">
+											<div class="title">Sort By</div>
+											<div class="right">
+												<a href="#" class="link popup-close color-red"><i class="material-icons">cancel</i></a>
+											</div>
+										</div>
+									</div>
+									<div class="page-content">
+										<div class="list" style="font-size:12px;">
+											<ul>
+												<li>
+													<label class="item-radio item-content">
+														<input type="radio" name="orderby" value="ASC" />
+														<i class="icon icon-radio"></i>
+														<div class="item-inner">
+															<div class="item-title">Price Low to High</div>
+														</div>
+													</label>
+												</li>
+												<li>
+													<label class="item-radio item-content">
+														<input type="radio" name="orderby" value="DESC" />
+														<i class="icon icon-radio"></i>
+														<div class="item-inner">
+															<div class="item-title">Price High to Low</div>
+														</div>
+													</label>
+												</li>
+											</ul>
 										</div>
 									</div>
 								</div>
-								<div class="page-content">
-									<div class="block-title" style="margin:16px 0px 10px 16px;">
-										<strong>Size</strong>
-									</div>
-									<div class="list">
-										<ul>
-											<li>
-												<label class="item-checkbox item-content">
-													<input
-														type="checkbox"
-														name="demo-checkbox"
-														value=""
-													/>
-													<i class="icon icon-checkbox"></i>
-													<div class="item-inner">
-														<div class="item-title">S (36 Inch)</div>
-													</div>
-												</label>
-											</li>
-											<li>
-												<label class="item-checkbox item-content">
-													<input
-														type="checkbox"
-														name="demo-checkbox"
-														value=""
-													/>
-													<i class="icon icon-checkbox"></i>
-													<div class="item-inner">
-														<div class="item-title">M (38 Inch)</div>
-													</div>
-												</label>
-											</li>
-											<li>
-												<label class="item-checkbox item-content">
-													<input
-														type="checkbox"
-														name="demo-checkbox"
-														value=""
-													/>
-													<i class="icon icon-checkbox"></i>
-													<div class="item-inner">
-														<div class="item-title">L (40 Inch)</div>
-													</div>
-												</label>
-											</li>
-											<li>
-												<label class="item-checkbox item-content">
-													<input
-														type="checkbox"
-														name="demo-checkbox"
-														value=""
-													/>
-													<i class="icon icon-checkbox"></i>
-													<div class="item-inner">
-														<div class="item-title">XL (42 Inch)</div>
-													</div>
-												</label>
-											</li>
-											<li>
-												<label class="item-checkbox item-content">
-													<input
-														type="checkbox"
-														name="demo-checkbox"
-														value=""
-													/>
-													<i class="icon icon-checkbox"></i>
-													<div class="item-inner">
-														<div class="item-title">XXL (44 Inch)</div>
-													</div>
-												</label>
-											</li>
-											<li>
-												<label class="item-checkbox item-content">
-													<input
-														type="checkbox"
-														name="demo-checkbox"
-														value=""
-													/>
-													<i class="icon icon-checkbox"></i>
-													<div class="item-inner">
-														<div class="item-title">XXXL (46 Inch)</div>
-													</div>
-												</label>
-											</li>
-										</ul>
-									</div>
-
-									<div class="block-title" style="margin:0px 0px 10px 16px;">
-										<strong>Colour</strong>
-									</div>
-									<div class="list">
-										<ul>
-											<li>
-												<label class="item-checkbox item-content">
-													<input
-														type="checkbox"
-														name="demo-checkbox"
-														value=""
-													/>
-													<i class="icon icon-checkbox"></i>
-													<div class="item-inner">
-														<div class="item-title">Black</div>
-													</div>
-												</label>
-											</li>
-											<li>
-												<label class="item-checkbox item-content">
-													<input
-														type="checkbox"
-														name="demo-checkbox"
-														value=""
-													/>
-													<i class="icon icon-checkbox"></i>
-													<div class="item-inner">
-														<div class="item-title">Red</div>
-													</div>
-												</label>
-											</li>
-											<li>
-												<label class="item-checkbox item-content">
-													<input
-														type="checkbox"
-														name="demo-checkbox"
-														value=""
-													/>
-													<i class="icon icon-checkbox"></i>
-													<div class="item-inner">
-														<div class="item-title">White</div>
-													</div>
-												</label>
-											</li>
-											<li>
-												<label class="item-checkbox item-content">
-													<input
-														type="checkbox"
-														name="demo-checkbox"
-														value=""
-													/>
-													<i class="icon icon-checkbox"></i>
-													<div class="item-inner">
-														<div class="item-title">Grey</div>
-													</div>
-												</label>
-											</li>
-											<li>
-												<label class="item-checkbox item-content">
-													<input
-														type="checkbox"
-														name="demo-checkbox"
-														value=""
-													/>
-													<i class="icon icon-checkbox"></i>
-													<div class="item-inner">
-														<div class="item-title">Blue</div>
-													</div>
-												</label>
-											</li>
-											<li>
-												<label class="item-checkbox item-content">
-													<input
-														type="checkbox"
-														name="demo-checkbox"
-														value=""
-													/>
-													<i class="icon icon-checkbox"></i>
-													<div class="item-inner">
-														<div class="item-title">Yellow</div>
-													</div>
-												</label>
-											</li>
-											<li>
-												<label class="item-checkbox item-content">
-													<input
-														type="checkbox"
-														name="demo-checkbox"
-														value=""
-													/>
-													<i class="icon icon-checkbox"></i>
-													<div class="item-inner">
-														<div class="item-title">Orange</div>
-													</div>
-												</label>
-											</li>
-										</ul>
-									</div>
-
-									<div
-										class="block-title display-flex justify-content-space-between"
-									>
-										Price Filter <span class="price-value">Rs.0 - Rs.300</span>
-									</div>
-									<div class="list simple-list">
-										<ul>
-											<li class="item-row">
-												<div class="item-cell width-auto flex-shrink-0">
-													Rs
-												</div>
-												<div class="item-cell item-cell-shrink-3">
-													<!-- Dual range slider with all the parameters passed via data- attributes -->
-													<div
-														id="price-filter"
-														class="range-slider range-slider-init color-green"
-														data-label="true"
-														data-dual="true"
-														data-min="0"
-														data-max="300"
-														data-step="1"
-														data-value-left="0"
-														data-value-right="300"
-													></div>
-												</div>
-												<div class="item-cell width-auto flex-shrink-0">
-													Rs
-												</div>
-											</li>
-										</ul>
-									</div>
-									<br /><br />
-								</div>
-							</div>
-							<div
-								class="toolbar toolbar-bottom"
-								style="padding:6px 10px 0px 10px;"
-							>
-								<a href="#" class="col button button-outline color-red"
-									>Apply Filter</a
-								>
 							</div>
 						</div>
-					</div>
+						<!-- Popup -->
+						<!-- Popup -->
+						<div class="popup" id="my-popup2">
+							<div class="view">
+								<div class="page">
+									<div class="navbar">
+										<div class="navbar-inner">
+											<div class="title">FILTER BY</div>
+											<div class="right">
+												<a href="#" class="link popup-close color-red"><i class="material-icons">cancel</i></a>
+											</div>
+										</div>
+									</div>
+									<div class="page-content">
+										<div class="block-title" style="margin:16px 0px 10px 16px;">
+											<strong>Size</strong>
+										</div>
+										<div class="list">
+											<ul>
+												<li>
+													<label class="item-checkbox item-content">
+														<input type="checkbox" name="size[]" value="7">
+														<i class="icon icon-checkbox"></i>
+														<div class="item-inner">
+															<div class="item-title">S</div>
+														</div>
+													</label>
+												</li>
+												<li>
+													<label class="item-checkbox item-content">
+														<input type="checkbox" name="size[]" value="8">
+														<i class="icon icon-checkbox"></i>
+														<div class="item-inner">
+															<div class="item-title">M</div>
+														</div>
+													</label>
+												</li>
+												<li>
+													<label class="item-checkbox item-content">
+														<input type="checkbox" name="size[]" value="9">
+														<i class="icon icon-checkbox"></i>
+														<div class="item-inner">
+															<div class="item-title">L</div>
+														</div>
+													</label>
+												</li>
+												<li>
+													<label class="item-checkbox item-content">
+														<input type="checkbox" name="size[]" value="10">
+														<i class="icon icon-checkbox"></i>
+														<div class="item-inner">
+															<div class="item-title">XL</div>
+														</div>
+													</label>
+												</li>
+												<li>
+													<label class="item-checkbox item-content">
+														<input type="checkbox" name="size[]" value="11">
+														<i class="icon icon-checkbox"></i>
+														<div class="item-inner">
+															<div class="item-title">XXL</div>
+														</div>
+													</label>
+												</li>
+												<li>
+													<label class="item-checkbox item-content">
+														<input type="checkbox" name="size[]" value="12">
+														<i class="icon icon-checkbox"></i>
+														<div class="item-inner">
+															<div class="item-title">XXXL</div>
+														</div>
+													</label>
+												</li>
+											</ul>
+										</div>
 
+										<div class="block-title" style="margin:0px 0px 10px 16px;">
+											<strong>Colour</strong>
+										</div>
+										<div class="list">
+											<ul id="colorList">
+
+											</ul>
+										</div>
+										
+
+										<!-- <div class="block-title display-flex justify-content-space-between">
+											Price Filter <span class="price-value">Rs.0 - Rs.300</span>
+										</div>
+										<div class="list simple-list">
+											<ul>
+												<li class="item-row">
+													<div class="item-cell width-auto flex-shrink-0">
+														Rs
+													</div>
+													<div class="item-cell item-cell-shrink-3">
+														<div id="price-filter" class="range-slider range-slider-init color-green" data-label="true"
+															data-dual="true" data-min="0" data-max="300" data-step="1" data-value-left="0"
+															data-value-right="300"></div>
+													</div>
+													<div class="item-cell width-auto flex-shrink-0">
+														Rs
+													</div>
+												</li>
+											</ul>
+										</div> -->
+										<br /><br />
+									</div>
+								</div>
+								<div class="toolbar toolbar-bottom" style="padding:6px 10px 0px 10px;">
+									<button onclick=phonegapApp.categoryFilter() class="col button button-outline color-red">Apply
+										Filter</button>
+								</div>
+							</div>
+						</div>
+					</form>
 					<!-- Popup -->
 				</div>
 			</div>
 			<div class="block" style="margin-top:15px; margin-bottom:15px;">
-				<p id="productMsg" class="text-align-center"></p>
+				<p id="productMsg" class="text-align-center">Loading....</p>
 				<div class="row" id="productsList">
-					<p class="text-align-center">Loading....</p>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
+<script>
+  return {
+    // Page Events
+    on: {
+      pageInit: function(e, page) {
+				phonegapApp.categoryProducts(e.detail.route.params.categoryId)
+				app.preloader.hide()
+				range.max = 120
+        $$('#price-filter').on('range:change', function (e, range) {
+					$$('.price-value').text('Rs.'+(range.value[0])+' - Rs.'+(range.value[1]));
+				});
+      },
+    }
+  }
+</script>

@@ -70,4 +70,5 @@
     <plugin name="cordova-plugin-statusbar" />
     <plugin name="cordova-plugin-whitelist" />
     <plugin name="cordova-plugin-fcm-with-dependecy-updated" />
+    <plugin name="cordova-plugin-x-socialsharing" />
 </widget>

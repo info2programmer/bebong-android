@@ -51,7 +51,8 @@
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-fcm-with-dependecy-updated": {}
+      "cordova-plugin-fcm-with-dependecy-updated": {},
+      "cordova-plugin-x-socialsharing": {}
     }
   },
   "dependencies": {

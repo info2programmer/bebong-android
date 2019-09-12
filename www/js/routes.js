@@ -3,7 +3,12 @@ routes = [
     path: '/',
     url: './index.html',
     on: {
-      
+      pageInit: function(e, page) {
+        phonegapApp.homePageData()
+
+      },
+      pageAfterIn: function() {
+      }
     }
   },
   {
@@ -40,8 +45,31 @@ routes = [
     url: './pages/profile.html',
   },
   {
-    path: '/product-details/',
-    url: './pages/product-details.html',
+    path: '/product-details/:productId/',
+    async: function (routeTo, routeFrom, resolve, reject) {
+      // Router instance
+      var router = this;
+
+      // App instance
+      var app = router.app;
+
+      // Show Preloader
+      app.preloader.show('multi');
+
+      // User ID from request
+      var productId = routeTo.params.productId;
+
+      // Simulate Ajax Request
+      setTimeout(function () {
+        phonegapApp.productDeatils(productId)
+        app.preloader.hide();
+        resolve(
+          {
+            componentUrl: './pages/product-details.html',
+          }
+        );
+      }, 1000);
+    },
   },
   {
     path: '/product-listing/:categoryId/',

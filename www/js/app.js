@@ -31,6 +31,16 @@ var app  = new Framework7({
   },
 });
 
+var range = app.range.create({
+  el: '.range-slider',
+  on: {
+    change: function () {
+      console.log('Range Slider value changed')
+    }
+  }
+})
+
+
 // create searchbar
 var searchbar = app.searchbar.create({
   el: '.searchbar',
@@ -49,6 +59,9 @@ var leftView = app.views.create('.view-left', {
   url: '/'
 });
 
+
+
+
 // Init/Create main view
 var mainView = app.views.create('.view-main', {
   url: '/'
@@ -65,3 +78,4 @@ $$('#my-login-screen .login-button').on('click', function () {
   // Alert username and password
   app.dialog.alert('Username: ' + username + '<br>Password: ' + password);
 });
+

@@ -22,7 +22,6 @@ var phonegapApp = {
     }
     else {
       // This Section For Push Notification Code
-      phonegapApp.homePageData()
       FCMPlugin.getToken(function (token) {
         alert(token);
         $.ajax({
@@ -128,10 +127,11 @@ var phonegapApp = {
       if (!rply.status) {
         return
       }
-
+       
       localStorage.setItem("bebongUserLogin", 1);
       localStorage.setItem("bebongUser", $('#txtMobileNumber').val());
       mainView.app.loginScreen.close()
+      
     });
   },
 
@@ -244,6 +244,13 @@ var phonegapApp = {
       </div>`
       }
       $('#bebongExclusive').html(bebongExclusive);
+      setTimeout(function(){ 
+        var swiper = app.swiper.create('.swiper-container', {
+          speed: 1200,
+          spaceBetween: 10,
+          autoplay: true,
+        }); 
+       }, 3000);
     });
   },
 
@@ -265,7 +272,7 @@ var phonegapApp = {
         let productList = ''
         for(list in rply.product){
           productList += `<div class="col-50">
-          <a href="/product-details/" class="color-black"
+          <a href="/product-details/${rply.product[list].product_id}/" class="color-black"
             ><img
               src="https://www.bebongstore.com/bebong2019/uploads/product/${rply.product[list].gallery_image}"
               style="width:100%; border-radius:4px;"
@@ -280,6 +287,40 @@ var phonegapApp = {
         </div>`
         }
         $('#productsList').html(productList);
+        $('#lblCategoryName').html(rply.categoryDetails.cat_name);
+        $('#txtcategoryId').val(rply.categoryDetails.cat_id);
+
+        let size = ''
+        for(list in rply.sizeLists){
+          size += `<li>
+            <label class="item-checkbox item-content">
+              <input type="checkbox" name="size[]" value="${rply.sizeLists[list].attribute_details_id}" />
+              <i class="icon icon-checkbox"></i>
+              <div class="item-inner">
+                <div class="item-title">${rply.sizeLists[list].attribute_detail}</div>
+              </div>
+            </label>
+          </li>`
+        }
+        $('#sizeList').html(size);
+
+        let color = ''
+        for(list in rply.colorList){
+          color += `<li>
+            <label class="item-checkbox item-content">
+              <input type="checkbox" name="color[]" value="${rply.colorList[list].attribute_details_id}" />
+              <i class="icon icon-checkbox"></i>
+              <div class="item-inner">
+                <div class="item-title">${rply.colorList[list].attribute_detail}</div>
+              </div>
+            </label>
+          </li>`
+        }
+        $('#colorList').html(color);
+
+        // $('.price-value').html(`Rs.0 - Rs.${rply.maxPrice.price}`);
+        // $('#price-filter').attr({'data-max' : `${rply.maxPrice.price}`, 'data-value-right' : `${rply.maxPrice.price}`});
+
 
         return
       }
@@ -288,6 +329,90 @@ var phonegapApp = {
       }
       app.preloader.hide()
     });
-  } 
+  }, 
+
+  // This Function For Apply Filter Category
+  categoryFilter : function(){
+    let categoryId = $('#txtcategoryId').val();
+
+    // Get All Color Element
+    let color = []   
+    $.each($("input[name='color[]']:checked"), function(){            
+      color.push($(this).val());
+    });
+
+    // Get All Size
+    let size = []   
+    $.each($("input[name='size[]']:checked"), function(){            
+      size.push($(this).val());
+    });
+
+
+    $.ajax({
+      type: "post",
+      url: url + "applyFilterCaterory",
+      data: {cat_id : categoryId, color : color, size : size },
+      dataType: "json",
+      beforeSend: function () {
+        app.preloader.show('milti')
+      }
+    }).done(rply=>{
+      let productList = ''
+      for(list in rply.product){
+        productList += `<div class="col-50">
+        <a href="/product-details/${rply.product[list].product_id}/" class="color-black"
+          ><img
+            src="https://www.bebongstore.com/bebong2019/uploads/product/${rply.product[list].gallery_image}"
+            style="width:100%; border-radius:4px;"
+          /><br />
+          <span style="font-size:12px;">${rply.product[list].name}</span><br />
+          <p style="font-size:12px; font-weight:900; margin-top: -2px;">
+            Rs. ${rply.product[list].discounted_price}&nbsp;&nbsp;<span
+              style="text-decoration:line-through; color:#999999; font-size:12px;"
+              >Rs. ${rply.product[list].price}</span
+            >
+          </p></a>
+      </div>`
+      }
+      $('#productsList').html(productList);
+      $('#lblProductCount').html(rply.product.length);
+      mainView.app.popup.close("#my-popup2")
+      app.preloader.hide()
+    });
+  },
+
+
+  // thos Section For Product Details
+  productDeatils : function(productId){
+    $.ajax({
+      type: "post",
+      url: url + "productDetails",
+      data: {productId : productId},
+      dataType: "json",
+      beforeSend: function (response) {
+        app.preloader.show()
+      }
+    }).done(rply=>{
+      console.log(rply)
+      let sizeList = ''
+      sizeList += `<option value="#" selected disabled="disabled">Tap Here</option>`
+      for(list in rply.sizeLists){
+        sizeList += `<option value="${rply.sizeLists[list].attribute_details_id}">${rply.sizeLists[list].attribute_detail}</option>`
+      }
+      $('#dvProductImage').attr('src',`https://www.bebongstore.com/uploads/product/${rply.product.gallery_image}`);
+      $('#dvProductName').html(rply.product.name);
+      $('#dvFinalPrice').html(rply.product.discounted_price);
+      $('#dvPrice').html(rply.product.price);
+      $('#ddlSizeCart').html(sizeList);
+      $('#dvProductCategory').html(rply.caregoryName.cat_name);
+      $('#dvProductColor').html(rply.colorDetails.attribute_detail);
+      $('#dvProductSKU').html(rply.product.skucode);
+      // $(selector).attr(attributeName, value);
+      
+      $('#linkShare').attr('onclick', `window.plugins.socialsharing.share('Bebong, ${rply.product.name}, https://www.bebongstore.com/product/${rply.product.seo_name}/${rply.product.product_id}', '${rply.product.name}', 'https://www.bebongstore.com/uploads/product/${rply.product.gallery_image}', 'https://www.bebongstore.com/product/${rply.product.seo_name}/${rply.product.product_id}')`);
+      
+      app.preloader.hide()
+    });
+  }
 
 };

@@ -1,4 +1,4 @@
-
+<template>
 <div class="page" data-name="about">
   <div class="navbar">
     <div class="navbar-inner sliding">
@@ -24,14 +24,14 @@
   <div class="page-content">
     
     <div class="block block-strong" style="margin-top:0px; margin-bottom:0px;">
-         <img src="image-bebong/newarrival2.jpg" style="width:100%;">
+         <img Id="dvProductImage" style="width:100%;">
     </div>
     
     <div class="block block-strong" style="margin-top:0px; margin-bottom:0px;">
      	<div class="row">
         	<div class="col-60">
-            <strong>Ei Poth Jodi ... White</strong><br />
-            <strong style="color:#33CC00; font-size:16px;">Rs. 300.00</strong>&nbsp;&nbsp;<span style="text-decoration:line-through; color:#999999; font-size:12px;">Rs. 399.00</span><br />
+            <strong id="dvProductName">Loading...</strong><br />
+            <strong style="color:#33CC00; font-size:16px;" id="dvFinalPrice">Rs. 300.00</strong>&nbsp;&nbsp;<span style="text-decoration:line-through; color:#999999; font-size:12px;" id="dvPrice">Rs. 399.00</span><br />
             Sold By : Bebong
             </div>
             <div class="col-40">
@@ -53,12 +53,18 @@
             <div class="block">
               <p>
               	<div class="card">
-                	<div class="card-header" style="font-size:12px;"><strong>Size</strong><span class="item-after"><strong>Chest</strong></span></div>
+                  <div class="card-header" style="font-size:12px;"><strong>Size</strong><span class="item-after"><strong>Chest</strong></span></div>
+                  
                     <div class="card-header" style="font-size:12px;">S<span class="item-after">36 Inch</span></div>
+
                     <div class="card-header" style="font-size:12px;">M<span class="item-after">38 Inch</span></div>
+
                     <div class="card-header" style="font-size:12px;">L<span class="item-after">40 Inch</span></div>
+
                     <div class="card-header" style="font-size:12px;">XL<span class="item-after">42 Inch</span></div>
+
                     <div class="card-header" style="font-size:12px;">XXL<span class="item-after">44 Inch</span></div>
+
                     <div class="card-header" style="font-size:12px;">XXL<span class="item-after">46 Inch</span></div>
                 </div>
               </p>
@@ -90,18 +96,12 @@
         <div class="list"  style="margin-top:0px; margin-bottom:0px;">
         	<li style="list-style-type:none;">
               <a class="item-link smart-select smart-select-init" style="margin-top: -20px; margin-bottom: -20px;">
-                <select name="size" required >
-                  <option value="#" selected disabled="disabled">Tap Here</option>
-                  <option value="S">S</option>
-                  <option value="M">M</option>
-                  <option value="L">L</option>
-                  <option value="XL">XL</option>
-                  <option value="XXL">XXL</option>
-                  <option value="XXXL">XXXL</option>
+                <select name="size" required  id="ddlSizeCart">
+                  
                 </select>
                 <div class="item-content">
                   <div class="item-inner">
-                    <div class="item-title" style="color:#DD0000;s">Choose Size</div>
+                    <div class="item-title" style="color:#DD0000;">Choose Size</div>
                   </div>
                 </div>
               </a>
@@ -110,22 +110,23 @@
         </p>
     </div> 
      
-      <div class="block block-strong" style="margin-top:0px; margin-bottom:0px;">
+      <div class="block block-strong" style="margin-top:0px ; margin-bottom:0px ;">
     	<a href="/cart1/" class="button button-raised button-fill">Add To Your Bag</a>
     </div>   
      
      
     <div class="block block-strong" style="margin-top:0px; margin-bottom:0px;">
     	
-        <p style="font-size:12px;">
-        Share On :  <a href="#" class="color-red">facebook</a> | <a href="#" class="color-red">Whatsapp</a>
-        </p>
+        <p style="font-size:12px;">  Share On :  <a href="javascript:void(0)" id="linkShare" class="color-red" style="font-size:12px"><i class="icon f7-icons">share</i></a> </p>
         
         <p style="font-size:12px;">
-        White colour t-shirt with a tagline : Ei Poth Jodi Na Sesh Hae" - Remember Something ?
+          Category : <span id="dvProductCategory"></span>
         </p>
         <p style="font-size:12px;">
-        SKU Code Ei P481324
+          Color : <span id="dvProductColor"></span>
+        </p>
+        <p style="font-size:12px;">
+        SKU : <span id="dvProductSKU"></span>
         </p>
     </div> 
     
@@ -136,6 +137,7 @@
   </div>
   
 </div>
+</template>
 
     
 
