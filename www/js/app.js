@@ -40,6 +40,10 @@ var range = app.range.create({
   }
 })
 
+var stepper = app.stepper.create({
+  el: '.stepper'
+})
+stepper.max=9
 
 // create searchbar
 var searchbar = app.searchbar.create({

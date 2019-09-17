@@ -23,7 +23,6 @@ var phonegapApp = {
     else {
       // This Section For Push Notification Code
       FCMPlugin.getToken(function (token) {
-        alert(token);
         $.ajax({
           type: "post",
           url: url + "updatePushToken",
@@ -127,11 +126,11 @@ var phonegapApp = {
       if (!rply.status) {
         return
       }
-       
+
       localStorage.setItem("bebongUserLogin", 1);
-      localStorage.setItem("bebongUser", $('#txtMobileNumber').val());
+      localStorage.setItem("bebongUser", userName);
       mainView.app.loginScreen.close()
-      
+
     });
   },
 
@@ -186,7 +185,7 @@ var phonegapApp = {
 
       // This Section For Bind Offer Data
       let offerdata = ''
-      for(list in rply.offer){
+      for (list in rply.offer) {
         offerdata += `<div class="block" style="margin:10px 0px 0px 0px;">
                         <a href="#"><img src="https://www.bebongstore.com/uploads/offer/${rply.offer[list].offer_image}" style="width:100%;"></a>
                       </div>`
@@ -196,7 +195,7 @@ var phonegapApp = {
 
       // This Section For New Arivals
       let newArival = ''
-      for(list in rply.newArrival){
+      for (list in rply.newArrival) {
         newArival += `<div class="swiper-slide text-align-center">
         <img src="https://www.bebongstore.com/uploads/product/${rply.newArrival[list].gallery_image}" style="width:100%;">
         <br>
@@ -205,12 +204,12 @@ var phonegapApp = {
         <br>
         <div class="row">
           <div class="col-50">
-            <a href="/product-details/${rply.newArrival[list].product_id}" class="button  button-outline button-small color-red">
+            <a href="/product-details/${rply.newArrival[list].product_id}/" class="button  button-outline button-small color-red">
               View Details
             </a>
           </div>
           <div class="col-50">
-            <a href="/product-details/${rply.newArrival[list].product_id}" class="button  button-outline button-small color-red">
+            <a href="/product-details/${rply.newArrival[list].product_id}/" class="button  button-outline button-small color-red">
               Add to Cart
             </a>
           </div>
@@ -222,7 +221,7 @@ var phonegapApp = {
 
       // This Section For Bebong Exclusive
       let bebongExclusive = ''
-      for(list in rply.exclusive){
+      for (list in rply.exclusive) {
         bebongExclusive += `<div class="swiper-slide text-align-center">
         <img src="https://www.bebongstore.com/uploads/product/${rply.exclusive[list].gallery_image}" style="width:100%;">
         <br>
@@ -231,12 +230,12 @@ var phonegapApp = {
         <br>
         <div class="row">
           <div class="col-50">
-            <a href="/product-details/${rply.exclusive[list].product_id}" class="button  button-outline button-small color-red">
+            <a href="/product-details/${rply.exclusive[list].product_id}/" class="button  button-outline button-small color-red">
               View Details
             </a>
           </div>
           <div class="col-50">
-            <a href="/product-details/${rply.exclusive[list].product_id}" class="button  button-outline button-small color-red">
+            <a href="/product-details/${rply.exclusive[list].product_id}/" class="button  button-outline button-small color-red">
               Add to Cart
             </a>
           </div>
@@ -244,33 +243,33 @@ var phonegapApp = {
       </div>`
       }
       $('#bebongExclusive').html(bebongExclusive);
-      setTimeout(function(){ 
+      setTimeout(function () {
         var swiper = app.swiper.create('.swiper-container', {
           speed: 1200,
           spaceBetween: 10,
           autoplay: true,
-        }); 
-       }, 3000);
+        });
+      }, 3000);
     });
   },
 
   // This Function For Category Product Items
-  categoryProducts : function(categoryId){
+  categoryProducts: function (categoryId) {
     $.ajax({
       type: "post",
       url: url + "categoryProduct",
-      data: {categoryId : categoryId},
+      data: { categoryId: categoryId },
       dataType: "json",
       beforeSend: function () {
         app.preloader.show('multi')
       }
-    }).done(rply=>{
+    }).done(rply => {
       $('#lblProductCount').html(rply.productCount);
-      if(rply.product.length>0){
+      if (rply.product.length > 0) {
         $('#productMsg').hide();
 
         let productList = ''
-        for(list in rply.product){
+        for (list in rply.product) {
           productList += `<div class="col-50">
           <a href="/product-details/${rply.product[list].product_id}/" class="color-black"
             ><img
@@ -291,7 +290,7 @@ var phonegapApp = {
         $('#txtcategoryId').val(rply.categoryDetails.cat_id);
 
         let size = ''
-        for(list in rply.sizeLists){
+        for (list in rply.sizeLists) {
           size += `<li>
             <label class="item-checkbox item-content">
               <input type="checkbox" name="size[]" value="${rply.sizeLists[list].attribute_details_id}" />
@@ -305,7 +304,7 @@ var phonegapApp = {
         $('#sizeList').html(size);
 
         let color = ''
-        for(list in rply.colorList){
+        for (list in rply.colorList) {
           color += `<li>
             <label class="item-checkbox item-content">
               <input type="checkbox" name="color[]" value="${rply.colorList[list].attribute_details_id}" />
@@ -324,26 +323,26 @@ var phonegapApp = {
 
         return
       }
-      else{
+      else {
         $('#productMsg').html(`No Product Found`);
       }
       app.preloader.hide()
     });
-  }, 
+  },
 
   // This Function For Apply Filter Category
-  categoryFilter : function(){
+  categoryFilter: function () {
     let categoryId = $('#txtcategoryId').val();
 
     // Get All Color Element
-    let color = []   
-    $.each($("input[name='color[]']:checked"), function(){            
+    let color = []
+    $.each($("input[name='color[]']:checked"), function () {
       color.push($(this).val());
     });
 
     // Get All Size
-    let size = []   
-    $.each($("input[name='size[]']:checked"), function(){            
+    let size = []
+    $.each($("input[name='size[]']:checked"), function () {
       size.push($(this).val());
     });
 
@@ -351,14 +350,14 @@ var phonegapApp = {
     $.ajax({
       type: "post",
       url: url + "applyFilterCaterory",
-      data: {cat_id : categoryId, color : color, size : size },
+      data: { cat_id: categoryId, color: color, size: size },
       dataType: "json",
       beforeSend: function () {
         app.preloader.show('milti')
       }
-    }).done(rply=>{
+    }).done(rply => {
       let productList = ''
-      for(list in rply.product){
+      for (list in rply.product) {
         productList += `<div class="col-50">
         <a href="/product-details/${rply.product[list].product_id}/" class="color-black"
           ><img
@@ -383,23 +382,23 @@ var phonegapApp = {
 
 
   // thos Section For Product Details
-  productDeatils : function(productId){
+  productDeatils: function (productId) {
     $.ajax({
       type: "post",
       url: url + "productDetails",
-      data: {productId : productId},
+      data: { productId: productId },
       dataType: "json",
       beforeSend: function (response) {
         app.preloader.show()
       }
-    }).done(rply=>{
+    }).done(rply => {
       console.log(rply)
       let sizeList = ''
       sizeList += `<option value="#" selected disabled="disabled">Tap Here</option>`
-      for(list in rply.sizeLists){
+      for (list in rply.sizeLists) {
         sizeList += `<option value="${rply.sizeLists[list].attribute_details_id}">${rply.sizeLists[list].attribute_detail}</option>`
       }
-      $('#dvProductImage').attr('src',`https://www.bebongstore.com/uploads/product/${rply.product.gallery_image}`);
+      $('#dvProductImage').attr('src', `https://www.bebongstore.com/uploads/product/${rply.product.gallery_image}`);
       $('#dvProductName').html(rply.product.name);
       $('#dvFinalPrice').html(rply.product.discounted_price);
       $('#dvPrice').html(rply.product.price);
@@ -408,11 +407,121 @@ var phonegapApp = {
       $('#dvProductColor').html(rply.colorDetails.attribute_detail);
       $('#dvProductSKU').html(rply.product.skucode);
       // $(selector).attr(attributeName, value);
-      
+
       $('#linkShare').attr('onclick', `window.plugins.socialsharing.share('Bebong, ${rply.product.name}, https://www.bebongstore.com/product/${rply.product.seo_name}/${rply.product.product_id}', '${rply.product.name}', 'https://www.bebongstore.com/uploads/product/${rply.product.gallery_image}', 'https://www.bebongstore.com/product/${rply.product.seo_name}/${rply.product.product_id}')`);
-      
+
+      $('#ddlSizeCart').attr('onchange', `phonegapApp.getProductStock(${rply.product.product_id})`);
+      $('#btnAddCart').attr('onclick', `phonegapApp.addToCart(${rply.product.product_id})`);
+
       app.preloader.hide()
     });
-  }
+  },
+
+  // This Function For Get Product Stock
+  getProductStock: function (productId) {
+
+    let size = $('#ddlSizeCart').val();
+    $.ajax({
+      type: "post",
+      url: url + "getProductStock",
+      data: { productId: productId, size: size },
+      dataType: "json",
+      beforeSend: function () {
+        app.preloader.show()
+      }
+    }).done(rply => {
+      app.preloader.hide()
+      let currentStock = parseInt(rply.currentStock)
+
+      if (currentStock < 1) {
+        var stepper = app.stepper.create({
+          el: '.stepper'
+        })
+        // $('#dvProductStock').html('<span class="badge color-red">No Stock Available</span>');
+        let toastLargeMessage = app.toast.create({
+          text: 'No Stock Available Right Now',
+          closeTimeout: 2000,
+        });
+        stepper.setValue(0)
+        stepper.destroy()
+        toastLargeMessage.open()
+      }
+      else {
+        var stepper = app.stepper.create({
+          el: '.stepper'
+        })
+        if (currentStock > 9) {
+          stepper.setValue(1)
+          stepper.max = 9
+        }
+        else {
+          stepper.setValue(1)
+          stepper.max = currentStock
+        }
+      }
+    });
+  },
+
+
+  //This Function For Add Item To The Cart
+  addToCart : function(productId){
+    let productSize = $('#ddlSizeCart').val();
+    console.log(productSize)
+    if(productSize === null){
+      let toastLargeMessage = app.toast.create({
+        text: 'Please select size',
+        closeTimeout: 2000,
+      });
+      toastLargeMessage.open()
+      return;
+    }
+    var stepper = app.stepper.create({
+      el: '.stepper'
+    })
+
+    $.ajax({
+      type: "post",
+      url: url + "addToCart",
+      data: {productSize:productSize,productId : productId, qty : stepper.value, userPhone : localStorage.getItem('bebongUser')},
+      dataType: "json",
+      beforeSend: function () {
+        app.preloader.show('multi')
+      }
+    }).done(rply=>{
+      app.preloader.hide()
+      console.log(rply)
+      if(!rply.status){
+        let toastLargeMessage = app.toast.create({
+          text: 'No Stock Available Right Now',
+          closeTimeout: 2000,
+        });
+        toastLargeMessage.open()
+      }
+      else{
+        let toastLargeMessage = app.toast.create({
+          text: 'Item Added To Cart Successfully',
+          closeTimeout: 2000,
+        });
+        toastLargeMessage.open()
+      }
+    });
+    
+  },
+
+  // This Function For Get Cart Items 
+  getCartItems : function(){
+    $.ajax({
+      type: "post",
+      url: url + "cartItems",
+      data: {userPhone : localStorage.getItem('bebongUser')},
+      dataType: "json",
+      beforeSend: function () {
+        app.preloader.show('multi')
+      }
+    }).done(rply=>{
+      app.preloader.hide()
+      console.log(rply)
+    });
+  },
 
 };

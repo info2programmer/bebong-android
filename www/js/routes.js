@@ -100,7 +100,22 @@ routes = [
   },
   {
     path: '/cart1/',
-    url: './pages/cart1.html',
+    async: function (routeTo, routeFrom, resolve, reject) {
+      var router = this;
+      var app = router.app;
+      app.preloader.show('multi');
+
+      // Simulate Ajax Request
+      setTimeout(function () {
+        phonegapApp.getCartItems()
+        app.preloader.hide();
+        resolve(
+          {
+            componentUrl: './pages/cart1.html',
+          }
+        );
+      }, 1000);
+    },
   },
   {
     path: '/registration/',
