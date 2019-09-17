@@ -524,4 +524,82 @@ var phonegapApp = {
     });
   },
 
+
+  // This Section For Get User Details
+  userDetails : function () {
+    let userPhone = localStorage.getItem('bebongUser')
+
+    $.ajax({
+      type: "post",
+      url: url + "getUserInfo",
+      data: {userPhone : userPhone},
+      dataType: "json",
+      beforeSend: function () {
+        app.preloader.show('multi')
+      }
+    }).done(rply=>{
+      app.preloader.hide()
+      console.log(rply)
+      $('#lblCustomerName').html(rply.userDetails.customer_name);
+      $('#lblCustomerPhone').html(rply.userDetails.customer_mobile);
+      $('#lblCustomerEmail').html(rply.userDetails.customer_email);
+
+      let addressList = ''
+      for(list in rply.userAddress){
+        addressList += `<div class="block block-strong" style="margin-top:0px; margin-bottom:0px; padding: 6px 15px; font-size:12px;"><strong>${rply.userAddress[list].address_type}</strong> : ${rply.userAddress[list].houseNo} ${rply.userAddress[list].localArea}  ${rply.userAddress[list].address}, ${rply.userAddress[list].landmark} Pincode - ${rply.userAddress[list].pincode}</div>`
+      }
+      $('#listAddress').html(addressList);
+
+      // 
+    });
+
+    
+  },
+
+  // This Section For Logout
+  logout : function(){
+    localStorage.clear()
+    window.location.href="index.html"
+  },
+
+  // This section for Add New Address
+  handelAddNewAddress : function(){
+    let houseNo = $('#txtAddressHouseNo').val();
+    let shippingAddress = $('#txtAddressShipping').val();
+    let locality = $('#txtAddressLocality').val();
+    let landMark = $('#txtAddressLandMark').val();
+    let pincode = $('#txtAddressPincode').val();
+    let addressType = $('#ddlTypeAddress').val();
+
+    if(addressType === "" || shippingAddress === "" || pincode === ""){
+      let toastLargeMessage = app.toast.create({
+        text: 'Address Type, Shipping Address and Pincode are amandetory fields',
+        closeTimeout: 2000,
+      });
+      toastLargeMessage.open()
+      return
+    }
+
+    $.ajax({
+      type: "post",
+      url: url + "insertAddress",
+      data: {houseNo : houseNo, shippingAddress : shippingAddress, locality : locality, landMark : landMark, pincode : pincode, addressType : addressType , userPhone : localStorage.getItem('bebongUser')},
+      dataType: "json",
+      beforeSend: function () {
+        app.preloader.show('multi')
+      }
+    }).done(rply=>{
+      app.preloader.hide()
+      if(rply.status){
+        let toastLargeMessage = app.toast.create({
+          text: 'Address added successfully',
+          closeTimeout: 2000,
+        });
+        toastLargeMessage.open()
+        phonegapApp.userDetails()
+        app.popup.close(".address-popup")
+      }
+    });
+  },
+
 };

@@ -231,7 +231,7 @@
 
           <!-- offer1 -->
           <div id="homeoffer"></div>
-          
+
 
           <!-- New Arrivals -->
           <div class="block-title" style="color:#000000; margin-top:10px;">NEW ARRIVALS</div>
@@ -545,7 +545,8 @@
             <div class="list">
               <ul>
                 <li style="padding-left: 25px;padding-right: 25px;">
-                  <button class="col button button-outline button-round" onclick="phonegapApp.handelLogin()">Login</button>
+                  <button class="col button button-outline button-round"
+                    onclick="phonegapApp.handelLogin()">Login</button>
                 </li>
               </ul>
             </div>
@@ -584,7 +585,8 @@
             <div class="list">
               <ul>
                 <li>
-                  <a href="javascript:void(0)" onclick="phonegapApp.handelForgotPassword()" class="item-link list-button">Get Password</a>
+                  <a href="javascript:void(0)" onclick="phonegapApp.handelForgotPassword()"
+                    class="item-link list-button">Get Password</a>
                 </li>
               </ul>
             </div>
@@ -631,7 +633,7 @@
                       <div class="item-inner">
                         <div class="item-title item-label">Mobile Number</div>
                         <div class="item-input-wrap">
-                          <input type="tel" placeholder="Mobile Number"  id="txtMobileNumber"/>
+                          <input type="tel" placeholder="Mobile Number" id="txtMobileNumber" />
                         </div>
                       </div>
                     </div>
@@ -657,13 +659,13 @@
                       </div>
                     </div>
                   </li>
-                  
+
                   <li>
                     <div class="item-content item-input">
                       <div class="item-inner">
                         <div class="item-title item-label">Pincode</div>
                         <div class="item-input-wrap">
-                          <input type="number" placeholder="Pincode" id="txtPincode"/>
+                          <input type="number" placeholder="Pincode" id="txtPincode" />
                         </div>
                       </div>
                     </div>
@@ -686,10 +688,104 @@
               </div>
 
               <button onclick="phonegapApp.handelRegister()" class="col button button-fill">Sign Up Now</button>
-              <p class="text-align-center"><a class="link" onclick=phonegapApp.toogleRegister(0)>Already Have Account? Login Here</a></p> 
+              <p class="text-align-center"><a class="link" onclick=phonegapApp.toogleRegister(0)>Already Have Account?
+                  Login Here</a></p>
 
             </div>
 
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Adress Modal -->
+    <div class="popup address-popup">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title">Manage Address</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <a class="link popup-close color-red">Close</a>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="block-title">ADD NEW ADDRESS</div>
+            <div class="list no-hairlines-md">
+              <ul>
+                <li>
+                  <div class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">House No</div>
+                      <div class="item-input-wrap">
+                        <input type="text" placeholder="House No" id="txtAddressHouseNo" />
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Shipping Address</div>
+                      <div class="item-input-wrap">
+                        <input type="text" placeholder="Shipping Address" id="txtAddressShipping" />
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                <li>
+                  <div class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Locality</div>
+                      <div class="item-input-wrap">
+                        <input type="text" placeholder="Shipping Locality" id="txtAddressLocality" />
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Landmark</div>
+                      <div class="item-input-wrap">
+                        <input type="text" placeholder="Shipping Landmark" id="txtAddressLandMark" />
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Pincode</div>
+                      <div class="item-input-wrap">
+                        <input type="number" placeholder="Pincode" id="txtAddressPincode" />
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div class="item-content item-input">
+                    <div class="item-inner">
+                      <div class="item-title item-label">Where It Is ?</div>
+                      <div class="item-input-wrap">
+                        <select id="ddlTypeAddress">
+                          <option value="" selected="selected" disabled="disabled">Tap Here</option>
+                          <option value="Home">Home</option>
+                          <option value="Work">Work</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="row">
+              <div class="col"><button onclick="phonegapApp.handelAddNewAddress()" class="col button button-fill">Save Address</button></div>
+            </div>
+            
           </div>
         </div>
       </div>
@@ -732,7 +828,7 @@
     phonegapApp.initialize();
   </script>
 
-<!-- 
+  <!-- 
   <script>
     var mySwiper = new Swiper('.swiper-container', {
       speed: 400,
@@ -748,7 +844,7 @@
       },
     });
   </script> -->
-  
+
 
 </body>
 

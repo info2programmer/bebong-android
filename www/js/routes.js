@@ -3,11 +3,11 @@ routes = [
     path: '/',
     url: './index.html',
     on: {
-      pageInit: function(e, page) {
+      pageInit: function (e, page) {
         phonegapApp.homePageData()
 
       },
-      pageAfterIn: function() {
+      pageAfterIn: function () {
       }
     }
   },
@@ -23,11 +23,11 @@ routes = [
     path: '/terms/',
     url: './pages/terms.html',
   },
-    {
+  {
     path: '/privacy/',
     url: './pages/privacy.html',
   },
-      {
+  {
     path: '/return/',
     url: './pages/return.html',
   },
@@ -39,10 +39,33 @@ routes = [
     path: '/happybong/',
     url: './pages/happybong.html',
   },
-  
+
   {
     path: '/profile/',
-    url: './pages/profile.html',
+    async: function (routeTo, routeFrom, resolve, reject) {
+      // Router instance
+      var router = this;
+
+      // App instance
+      var app = router.app;
+
+      // Show Preloader
+      app.preloader.show('multi');
+
+      // User ID from request
+      var productId = routeTo.params.productId;
+
+      // Simulate Ajax Request
+      setTimeout(function () {
+        phonegapApp.userDetails()
+        app.preloader.hide();
+        resolve(
+          {
+            componentUrl: './pages/profile.html',
+          }
+        );
+      }, 1000);
+    },
   },
   {
     path: '/product-details/:productId/',
@@ -121,7 +144,7 @@ routes = [
     path: '/registration/',
     url: './pages/registration.html',
   },
-   {
+  {
     path: '/payment/',
     url: './pages/payment.html',
   },
