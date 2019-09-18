@@ -464,10 +464,10 @@ var phonegapApp = {
 
 
   //This Function For Add Item To The Cart
-  addToCart : function(productId){
+  addToCart: function (productId) {
     let productSize = $('#ddlSizeCart').val();
     console.log(productSize)
-    if(productSize === null){
+    if (productSize === null) {
       let toastLargeMessage = app.toast.create({
         text: 'Please select size',
         closeTimeout: 2000,
@@ -482,22 +482,22 @@ var phonegapApp = {
     $.ajax({
       type: "post",
       url: url + "addToCart",
-      data: {productSize:productSize,productId : productId, qty : stepper.value, userPhone : localStorage.getItem('bebongUser')},
+      data: { productSize: productSize, productId: productId, qty: stepper.value, userPhone: localStorage.getItem('bebongUser') },
       dataType: "json",
       beforeSend: function () {
         app.preloader.show('multi')
       }
-    }).done(rply=>{
+    }).done(rply => {
       app.preloader.hide()
       console.log(rply)
-      if(!rply.status){
+      if (!rply.status) {
         let toastLargeMessage = app.toast.create({
           text: 'No Stock Available Right Now',
           closeTimeout: 2000,
         });
         toastLargeMessage.open()
       }
-      else{
+      else {
         let toastLargeMessage = app.toast.create({
           text: 'Item Added To Cart Successfully',
           closeTimeout: 2000,
@@ -505,65 +505,161 @@ var phonegapApp = {
         toastLargeMessage.open()
       }
     });
-    
+
   },
 
   // This Function For Get Cart Items 
-  getCartItems : function(){
+  getCartItems: function () {
     $.ajax({
       type: "post",
       url: url + "cartItems",
-      data: {userPhone : localStorage.getItem('bebongUser')},
+      data: { userPhone: localStorage.getItem('bebongUser') },
       dataType: "json",
       beforeSend: function () {
         app.preloader.show('multi')
       }
-    }).done(rply=>{
+    }).done(rply => {
       app.preloader.hide()
       console.log(rply)
+      let itemList = ``
+      for(list in rply.cartItems){
+        itemList += `<div class="row" style="margin-bottom:12px;">
+        <div class="col-25">
+          <img src="https://www.bebongstore.com/uploads/product/${rply.cartItems[list].gallery_image}" width="100%;" />
+        </div>
+        <div class="col-75">
+          <p style="text-transform:uppercase; font-size:12px; font-weight:900; margin-top: 0px; margin-bottom: 0px;">${rply.cartItems[list].name}</p>
+          <p style="font-size:12px; margin-top: -2px; margin-bottom: 0px;">Size : ${rply.cartItems[list].attribute_detail}</p>
+          <div class="stepper stepper-small stepper-outline stepper-init color-black" style="height: 24px;">
+            <div class="stepper-button-minus" style="width: 26px;"></div>
+            <div class="stepper-input-wrap">
+              <input type="text" value="${rply.cartItems[list].quantity}" min="0" max="9" step="1" readonly style="width: 30px; color: #ff3b30;">
+            </div>
+            <div class="stepper-button-plus" style="width: 26px;"></div>
+          </div>
+          <p style="font-size:12px; margin-top: -2px; margin-bottom: 0px; font-weight:900;">Rs.
+          ${rply.cartItems[list].discounted_price}&nbsp;&nbsp;<span style="text-decoration:line-through; color:#999999; font-size:12px;">Rs.
+          ${rply.cartItems[list].price}</span></p>
+        </div>
+      </div>`
+      }
+      $('#cartProducts').html(itemList);
+      $('#lblGrandTotal').html(rply.cart_amount);
+      $('#lblDiscount').html(rply.cart_coupon_amount);
+      $('#lblDeliveryCharge').html(rply.cart_delivery_amount);
+      $('#lblNetTotal').html(rply.grand_total);
+
+      let couponCode = ''
+      for(list in rply.offers){
+        couponCode += `<li>
+        <label class="item-radio item-content">
+          <input type="radio" name="demo-radio" value="coupon1" />
+          <i class="icon icon-radio"></i>
+          <div class="item-inner">
+            <div class="item-title" style="border: 1px #666 dashed; padding: 0px 10px;width: 100%;">${rply.offers[list].offer_name}<p
+                style="font-size:10px; margin-bottom:2px; margin-top:2px;">${rply.offers[list].description}</p>
+            </div>
+          </div>
+        </label>
+      </li>`
+      }
+      $('#lblCouponList').html(couponCode);
     });
   },
 
 
   // This Section For Get User Details
-  userDetails : function () {
+  userDetails: function () {
     let userPhone = localStorage.getItem('bebongUser')
 
     $.ajax({
       type: "post",
       url: url + "getUserInfo",
-      data: {userPhone : userPhone},
+      data: { userPhone: userPhone },
       dataType: "json",
       beforeSend: function () {
         app.preloader.show('multi')
       }
-    }).done(rply=>{
+    }).done(rply => {
       app.preloader.hide()
-      console.log(rply)
       $('#lblCustomerName').html(rply.userDetails.customer_name);
       $('#lblCustomerPhone').html(rply.userDetails.customer_mobile);
       $('#lblCustomerEmail').html(rply.userDetails.customer_email);
 
       let addressList = ''
-      for(list in rply.userAddress){
+      for (list in rply.userAddress) {
         addressList += `<div class="block block-strong" style="margin-top:0px; margin-bottom:0px; padding: 6px 15px; font-size:12px;"><strong>${rply.userAddress[list].address_type}</strong> : ${rply.userAddress[list].houseNo} ${rply.userAddress[list].localArea}  ${rply.userAddress[list].address}, ${rply.userAddress[list].landmark} Pincode - ${rply.userAddress[list].pincode}</div>`
       }
       $('#listAddress').html(addressList);
 
+      let currentOrderList = ''
+
+      for (list in rply.currentOrderDetailsAndItems) {
+        currentOrderList += `<li class="accordion-item"><a href="#" class="item-content item-link">
+                              <div class="item-inner">
+                                <div class="item-title  text-color-green">
+                                  Order Id : <span>${rply.currentOrderDetailsAndItems[list].order_no}</span> / <span>${rply.currentOrderDetailsAndItems[list].payment_method}</span>
+                                </div>
+                              </div>
+                            </a>
+                            <div class="accordion-item-content">`
+        for (item in rply.currentOrderDetailsAndItems[list].orderDetails) {
+          currentOrderList += `<div class="block">
+                                <p>Order Date : <span>${rply.currentOrderDetailsAndItems[list].order_date}</span></p>
+                                <p>Ordered Item : <span>${rply.currentOrderDetailsAndItems[list].orderDetails[item].name}</span> | Size :<span> ${rply.currentOrderDetailsAndItems[list].orderDetails[item].attribute_detail}</span></p>
+                                <p>Price : Rs. <span>${rply.currentOrderDetailsAndItems[list].orderDetails[item].price}</span></p>
+                              </div><hr>`
+
+        }
+
+        currentOrderList += `<div class="block"><a class="link color-red" onclick="phonegapApp.openCancelRequest(${rply.currentOrderDetailsAndItems[list].order_id})">Cancel</a></div>
+                            </div>
+                          </li>`
+      }
+      $('#currentOrder').html(currentOrderList);
+
+      let previousOrderList = ''
+
+      for (list in rply.previousOrederDetailsAndItems) {
+        previousOrderList += `<li class="accordion-item"><a href="#" class="item-content item-link">
+                              <div class="item-inner">`
+                              if(rply.previousOrederDetailsAndItems[list].order_status == 5){
+                                previousOrderList += `<div class="item-title text-color-red">`
+                              }
+                              else{
+                                previousOrderList += `<div class="item-title text-color-green">`
+                              }
+                                 previousOrderList += ` Order Id : <span>${rply.previousOrederDetailsAndItems[list].order_no}</span> / <span>${rply.previousOrederDetailsAndItems[list].payment_method}</span>
+                                </div>
+                              </div>
+                            </a>
+                            <div class="accordion-item-content">`
+        for (item in rply.previousOrederDetailsAndItems[list].orderDetails) {
+          previousOrderList += `<div class="block">
+                                <p>Order Date : <span>${rply.previousOrederDetailsAndItems[list].order_date}</span></p>
+                                <p>Ordered Item : <span>${rply.previousOrederDetailsAndItems[list].orderDetails[item].name}</span> | Size :<span> ${rply.previousOrederDetailsAndItems[list].orderDetails[item].attribute_detail}</span></p>
+                                <p>Price : Rs. <span>${rply.previousOrederDetailsAndItems[list].orderDetails[item].price}</span></p>
+                              </div><hr>`
+
+        }
+
+        previousOrderList += `</div> </li>`
+      }
+      $('#previousOrder').html(previousOrderList);
       // 
     });
 
-    
+
   },
 
   // This Section For Logout
-  logout : function(){
+  logout: function () {
     localStorage.clear()
-    window.location.href="index.html"
+    window.location.href = "index.html"
   },
 
   // This section for Add New Address
-  handelAddNewAddress : function(){
+  handelAddNewAddress: function () {
     let houseNo = $('#txtAddressHouseNo').val();
     let shippingAddress = $('#txtAddressShipping').val();
     let locality = $('#txtAddressLocality').val();
@@ -571,7 +667,7 @@ var phonegapApp = {
     let pincode = $('#txtAddressPincode').val();
     let addressType = $('#ddlTypeAddress').val();
 
-    if(addressType === "" || shippingAddress === "" || pincode === ""){
+    if (addressType === "" || shippingAddress === "" || pincode === "") {
       let toastLargeMessage = app.toast.create({
         text: 'Address Type, Shipping Address and Pincode are amandetory fields',
         closeTimeout: 2000,
@@ -583,14 +679,14 @@ var phonegapApp = {
     $.ajax({
       type: "post",
       url: url + "insertAddress",
-      data: {houseNo : houseNo, shippingAddress : shippingAddress, locality : locality, landMark : landMark, pincode : pincode, addressType : addressType , userPhone : localStorage.getItem('bebongUser')},
+      data: { houseNo: houseNo, shippingAddress: shippingAddress, locality: locality, landMark: landMark, pincode: pincode, addressType: addressType, userPhone: localStorage.getItem('bebongUser') },
       dataType: "json",
       beforeSend: function () {
         app.preloader.show('multi')
       }
-    }).done(rply=>{
+    }).done(rply => {
       app.preloader.hide()
-      if(rply.status){
+      if (rply.status) {
         let toastLargeMessage = app.toast.create({
           text: 'Address added successfully',
           closeTimeout: 2000,
@@ -601,5 +697,73 @@ var phonegapApp = {
       }
     });
   },
+
+  // This Section For Open Cancel Module
+  openCancelRequest : function(orderId){
+    app.actions.create({
+      buttons: [
+        {
+          text: 'Size mismatch',
+          onClick: function () {
+            $.ajax({
+              type: "post",
+              url: url + "cancelOrder",
+              data: {orderId : orderId , reason : 'Size mismatch'},
+              dataType: "json"
+            }).done(rply=>{
+              let toastLargeMessage = app.toast.create({
+                text: 'Order canceled successfully',
+                closeTimeout: 2000,
+              });
+              toastLargeMessage.open()
+              phonegapApp.userDetails()
+            });
+          }
+        },
+        {
+          text: 'Colour mismatch',
+          onClick: function () {
+            $.ajax({
+              type: "post",
+              url: url + "cancelOrder",
+              data: {orderId : orderId , reason : 'Size mismatch'},
+              dataType: "json"
+            }).done(rply=>{
+              let toastLargeMessage = app.toast.create({
+                text: 'Order canceled successfully',
+                closeTimeout: 2000,
+              });
+              toastLargeMessage.open()
+              phonegapApp.userDetails()
+            });
+          }
+        },
+        {
+          text: 'I changed my mind',
+          onClick: function () {
+            $.ajax({
+              type: "post",
+              url: url + "cancelOrder",
+              data: {orderId : orderId , reason : 'Size mismatch'},
+              dataType: "json"
+            }).done(rply=>{
+              let toastLargeMessage = app.toast.create({
+                text: 'I changed my mind',
+                closeTimeout: 2000,
+              });
+              toastLargeMessage.open()
+              phonegapApp.userDetails()
+            });
+          }
+        },
+        {
+          text: 'Cancel',
+          color: 'red'
+        },
+      ]
+    }).open()
+    
+  }
+
 
 };

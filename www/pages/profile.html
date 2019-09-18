@@ -39,78 +39,26 @@
 
       </div>
 
-      <div class="block block-strong" style="margin-top:0px; margin-bottom:0px; padding: 6px 15px; font-size:12px;;"><a  href="#" data-popup=".address-popup" class="popup-open color-blue link">Add New Address</a></div>
+      <div class="block block-strong" style="margin-top:0px; margin-bottom:0px; padding: 6px 15px; font-size:12px;;"><a
+          href="#" data-popup=".address-popup" class="popup-open color-blue link">Add New Address</a></div>
 
-      <div class="block block-strong" style="margin-top:0px; margin-bottom:0px; padding: 6px 15px; font-size:12px;"><a href="#" class="link" onclick=phonegapApp.logout() class="color-black">Log Out</a></div>
+      <div class="block block-strong" style="margin-top:0px; margin-bottom:0px; padding: 6px 15px; font-size:12px;"><a
+          href="#" class="link" onclick=phonegapApp.logout() class="color-black">Log Out</a></div>
 
-      <div class="block block-strong" style="margin-top:0px; margin-bottom:0px;">
-        <p style="color:#E80000;">Current Orders</p>
-      </div>
-      <div class="block block-strong" style="margin-top:0px; margin-bottom:0px; padding: 8px 15px;">
-        <div class="row">
-          <div class="col-35">
-            <img src="../image-bebong/newarrival1.jpg" width="100%" />
-          </div>
-          <div class="col-65" style="font-size:12px;">
-            Order No : BB2008191<br />
-            Order Date : 20.08.2019<br />
-            Item : Shatirupeno<br />
-            Size : M | Quantity : 1<br />
-            Price : Rs. 300.00<br />
-            <a href="#">Cancel This Order</a>
-          </div>
-        </div>
-      </div>
+      <div class="block block-strong text-color-yellow" style="margin-top:0px; margin-bottom:0px;">Current Orders</div>
+      <div class="list">
+        <ul id="currentOrder">
+          
+        </ul>
 
-      <div class="block block-strong" style="margin-top:0px; margin-bottom:0px; padding: 8px 15px;">
-        <div class="row">
-          <div class="col-35">
-            <img src="../image-bebong/newarrival2.jpg" width="100%" />
-          </div>
-          <div class="col-65" style="font-size:12px;">
-            Order No : BB2208197<br />
-            Order Date : 22.08.2019<br />
-            Item : Ei poth Jodi ... White<br />
-            Size : M | Quantity : 1<br />
-            Price : Rs. 300.00<br />
-            <a href="#">Cancel This Order</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="block block-strong" style="margin-top:0px; margin-bottom:0px;">
-        <p style="color:#E80000;">Previous Orders</p>
-      </div>
-      <div class="block block-strong" style="margin-top:0px; margin-bottom:0px; padding: 8px 15px;">
-        <div class="row">
-          <div class="col-35">
-            <img src="../image-bebong/newarrival3.jpg" width="100%" />
-          </div>
-          <div class="col-65" style="font-size:12px;">
-            Order No : BB1607196<br />
-            Item : Pencha (Owl) Black<br />
-            Size : M | Quantity : 1<br />
-            Price : Rs. 300.00<br />
-            <span style="color:#00CC33;">Delivered</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="block block-strong" style="margin-top:0px; margin-bottom:0px; padding: 8px 15px;">
-        <div class="row">
-          <div class="col-35">
-            <img src="../image-bebong/newarrival2.jpg" width="100%" />
-          </div>
-          <div class="col-65" style="font-size:12px;">
-            Order No : BB19071911<br />
-            Item : Ei poth Jodi ... White<br />
-            Size : M | Quantity : 1<br />
-            Price : Rs. 300.00<br />
-            <span style="color:#00CC33;">Delivered</span>
-          </div>
-        </div>
+        <div class="block block-strong text-color-yellow" style="margin-top:0px; margin-bottom:0px;">Previous Orders</div>
+      <div class="list">
+        <ul id="previousOrder">
+          
+        </ul>
       </div>
     </div>
   </div>
+  
   </div>
 </template>

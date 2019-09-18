@@ -13,8 +13,8 @@
     </div>
     <div class="page-content">
       <div class="block-title" style="margin-top:15px;">Your Ordered Item(s)</div>
-      <div class="block block-strong" style="margin-bottom:0px;">
-        <div class="row" style="margin-bottom:12px;">
+      <div class="block block-strong" style="margin-bottom:0px;" id="cartProducts">
+        <!-- <div class="row" style="margin-bottom:12px;">
           <div class="col-25">
             <img src="../image-bebong/newarrival1.jpg" width="100%;" />
           </div>
@@ -53,7 +53,7 @@
               300.00&nbsp;&nbsp;<span style="text-decoration:line-through; color:#999999; font-size:12px;">Rs.
                 399.00</span></p>
           </div>
-        </div>
+        </div> -->
       </div>
 
 
@@ -63,27 +63,27 @@
           <div class="col-70">
             Grand Total
           </div>
-          <div class="col-30">
-            Rs. 798.00
+          <div class="col-30" >
+            Rs. <span id="lblGrandTotal"></span>
           </div>
           <div class="col-70">
             Bebong Discount
           </div>
           <div class="col-30">
-            Rs. 198.00
+            Rs. <span id="lblDiscount"></span>
           </div>
           <div class="col-70">
             Delivery Charges
           </div>
           <div class="col-30">
-            Rs. 00.00
+            Rs. <span id="lblDeliveryCharge"></span>
           </div>
           <div class="col-100" style="margin-bottom:6px; margin-top:6px; border-bottom:1px dashed #ccc;"></div>
           <div class="col-70">
             <strong>NET TOTAL</strong>
           </div>
           <div class="col-30">
-            <strong>Rs. 600.00</strong>
+            <strong>Rs. <span id="lblNetTotal"></span></strong>
           </div>
           <div class="col-100" style="margin-bottom:6px; margin-top:6px; border-bottom:1px dashed #ccc;"></div>
         </div>
@@ -101,33 +101,10 @@
 
 
                   <div class="list">
-                    <div class="item-title" style="font-size:11px; color:#DD0000">Sorry ! you are not eligible yet. Shop
-                      More . . .</div><!-- Jodi eligible hae tahole eta off hoee jabee -->
-                    <ul>
-                      <li>
-                        <label class="item-radio item-content">
-                          <input type="radio" name="demo-radio" value="coupon1" />
-                          <i class="icon icon-radio"></i>
-                          <div class="item-inner">
-                            <div class="item-title" style="border: 1px #666 dashed; padding: 0px 10px;">FLAT200<p
-                                style="font-size:10px; margin-bottom:2px; margin-top:2px;">Rs.200 Off on Minimum Order
-                                of Rs.1200</p>
-                            </div>
-                          </div>
-                        </label>
-                      </li>
-                      <li>
-                        <label class="item-radio item-content">
-                          <input type="radio" name="demo-radio" value="coupon2" />
-                          <i class="icon icon-radio"></i>
-                          <div class="item-inner">
-                            <div class="item-title" style="border: 1px #666 dashed; padding: 0px 10px;">BONGDIWALI19<p
-                                style="font-size:10px; margin-bottom:2px; margin-top:2px;">Rs.500 Off on Minimum Order
-                                of Rs.2400</p>
-                            </div>
-                          </div>
-                        </label>
-                      </li>
+                    <!-- <div class="item-title" style="font-size:11px; color:#DD0000">Sorry ! you are not eligible yet. Shop
+                      More . . .</div> -->
+                    <ul id="lblCouponList">
+                      
                     </ul>
                   </div>
 
