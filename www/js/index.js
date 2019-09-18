@@ -521,26 +521,31 @@ var phonegapApp = {
     }).done(rply => {
       app.preloader.hide()
       console.log(rply)
+      if(!rply.status){
+        $('#cartPageContent').html(`<div class="block"><img src ="img/bebong-empty-cart.gif" width="100%"></div>`);
+        return;
+      }
       let itemList = ``
       for(list in rply.cartItems){
         itemList += `<div class="row" style="margin-bottom:12px;">
         <div class="col-25">
           <img src="https://www.bebongstore.com/uploads/product/${rply.cartItems[list].gallery_image}" width="100%;" />
         </div>
-        <div class="col-75">
+        <div class="col-55">
           <p style="text-transform:uppercase; font-size:12px; font-weight:900; margin-top: 0px; margin-bottom: 0px;">${rply.cartItems[list].name}</p>
           <p style="font-size:12px; margin-top: -2px; margin-bottom: 0px;">Size : ${rply.cartItems[list].attribute_detail}</p>
           <div class="stepper stepper-small stepper-outline stepper-init color-black" style="height: 24px;">
-            <div class="stepper-button-minus" style="width: 26px;"></div>
+            <div class="stepper-button-minus" style="width: 26px;" onclick="swipperminus('${rply.cartItems[list].product_id}', '${rply.cartItems[list].attribute_id}')"></div>
             <div class="stepper-input-wrap">
-              <input type="text" value="${rply.cartItems[list].quantity}" min="0" max="9" step="1" readonly style="width: 30px; color: #ff3b30;">
+              <input type="text" id="product-${rply.cartItems[list].product_id}-${rply.cartItems[list].attribute_id}" value="${rply.cartItems[list].quantity}" min="0" max="9" step="1" readonly style="width: 30px; color: #ff3b30;">
             </div>
-            <div class="stepper-button-plus" style="width: 26px;"></div>
+            <div class="stepper-button-plus" style="width: 26px;" onclick="swipperadd('${rply.cartItems[list].product_id}', '${rply.cartItems[list].attribute_id}')"></div>
           </div>
           <p style="font-size:12px; margin-top: -2px; margin-bottom: 0px; font-weight:900;">Rs.
           ${rply.cartItems[list].discounted_price}&nbsp;&nbsp;<span style="text-decoration:line-through; color:#999999; font-size:12px;">Rs.
           ${rply.cartItems[list].price}</span></p>
         </div>
+        <div class="col-20"><a class="link text-color-pink" onclick="phonegapApp.deleteCartItem('${rply.cartItems[list].product_id}', '${rply.cartItems[list].attribute_id}')"><i class="icon f7-icons">trash_fill</i></a></div>
       </div>`
       }
       $('#cartProducts').html(itemList);
@@ -553,7 +558,7 @@ var phonegapApp = {
       for(list in rply.offers){
         couponCode += `<li>
         <label class="item-radio item-content">
-          <input type="radio" name="demo-radio" value="coupon1" />
+          <input type="radio" name="demo-radio" value="coupon1" onclick="phonegapApp.applyCouponCode(${rply.offers[list].id})" />
           <i class="icon icon-radio"></i>
           <div class="item-inner">
             <div class="item-title" style="border: 1px #666 dashed; padding: 0px 10px;width: 100%;">${rply.offers[list].offer_name}<p
@@ -763,7 +768,113 @@ var phonegapApp = {
       ]
     }).open()
     
+  },
+
+  // This Function For Delete Cart Item
+  deleteCartItem : function (productId,attributeId){
+    if(confirm('are you sure to delete this product?')){
+      $.ajax({
+        type: "post",
+        url: url + "deleteCartItem",
+        data: {productId : productId, attributeId : attributeId, userPhone: localStorage.getItem('bebongUser')},
+        dataType: "json"
+      }).done(rply=>{
+        console.log(rply)
+      });
+    }
+    
+  },
+  // This Section For Apply Coupon Code
+  applyCouponCode : function(couponId){
+    $.ajax({
+      type: "post",
+      url: url + "applyCouponCode",
+      data: {couponId : couponId, userPhone : localStorage.getItem('bebongUser')},
+      dataType: "json",
+      beforeSend : function(){
+        app.preloader.show();
+      }
+    }).done(rply=>{
+      app.preloader.hide();
+      console.log(rply)
+    });
   }
 
 
 };
+
+function swipperminus(productId,attributeId){
+  let curretn_value = $('#product-' + productId + "-" + attributeId).val();
+  if (curretn_value != 1) {
+      curretn_value = parseInt(curretn_value) - 1;
+  }
+  else{
+    curretn_value = 1
+  }
+  
+  $.ajax({
+    type: "post",
+    url: url + "addToCart",
+    data: {productSize: attributeId, productId: productId, qty: curretn_value, userPhone: localStorage.getItem('bebongUser')},
+    dataType: "json",
+    beforeSend: function () {
+      app.preloader.show("multi")
+    }
+  }).done(rply =>{
+    app.preloader.hide()
+    if(rply.status){
+      let toastLargeMessage = app.toast.create({
+        text: `${rply.msg}`,
+        closeTimeout: 2000,
+      });
+      toastLargeMessage.open()
+      $('#product-' + productId + "-" + attributeId).val(curretn_value);
+      phonegapApp.getCartItems()
+    }
+    else{
+      let toastLargeMessage = app.toast.create({
+        text: `${rply.msg}`,
+        closeTimeout: 2000,
+      });
+      toastLargeMessage.open()
+    }
+    
+  });
+ 
+}
+
+function swipperadd(productId, attributeId) {
+  
+  let curretn_value = $('#product-' + productId + "-" + attributeId).val();
+  curretn_value = parseInt(curretn_value) + 1;
+  
+
+  $.ajax({
+    type: "post",
+    url: url + "addToCart",
+    data: {productSize: attributeId, productId: productId, qty: curretn_value, userPhone: localStorage.getItem('bebongUser')},
+    dataType: "json",
+    beforeSend: function () {
+      app.preloader.show("multi")
+    }
+  }).done(rply =>{
+    app.preloader.hide()
+    if(rply.status){
+      let toastLargeMessage = app.toast.create({
+        text: `${rply.msg}`,
+        closeTimeout: 2000,
+      });
+      toastLargeMessage.open()
+      $('#product-' + productId + "-" + attributeId).val(curretn_value);
+      phonegapApp.getCartItems()
+    }
+    else{
+      let toastLargeMessage = app.toast.create({
+        text: `${rply.msg}`,
+        closeTimeout: 2000,
+      });
+      toastLargeMessage.open()
+    }
+    
+  });
+}
