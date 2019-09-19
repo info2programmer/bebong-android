@@ -17,7 +17,7 @@ routes = [
   },
   {
     path: '/search/',
-    url: './pages/search.html',
+    componentUrl: './pages/search.html',
   },
   {
     path: '/terms/',

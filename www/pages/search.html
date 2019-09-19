@@ -1,8 +1,8 @@
-
-<div class="page">
-  <div class="navbar">
-    <div class="navbar-inner">
-      <div class="navbar-inner sliding">
+<template>
+  <div class="page">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="navbar-inner sliding">
           <div class="left">
             <a href="#" class="link back">
               <i class="icon icon-back color-red"></i>
@@ -11,65 +11,86 @@
           </div>
           <div class="title">Explore </div>
         </div>
-      <div class="subnavbar">
-        <!-- Searchbar with auto init -->
-        <form class="searchbar searchbar-init" data-search-container=".search-here">
-          <div class="searchbar-inner">
-            <div class="searchbar-input-wrap">
-              <input type="search" placeholder="Search" style="font-size: 14px;">
-              <i class="searchbar-icon"></i>
-              <span class="input-clear-button"></span>
+        <div class="subnavbar">
+          <!-- Searchbar with auto init -->
+          <form class="searchbar searchbar-init" data-search-container=".search-here">
+            <div class="searchbar-inner">
+              <div class="searchbar-input-wrap">
+                <input type="search" placeholder="Search" style="font-size: 14px;">
+                <i class="searchbar-icon"></i>
+                <span class="input-clear-button"></span>
+              </div>
+              <span class="searchbar-disable-button if-not-aurora">Cancel</span>
             </div>
-            <span class="searchbar-disable-button if-not-aurora">Cancel</span>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="toolbar toolbar-bottom">
+    <div class="toolbar toolbar-bottom">
       <div class="toolbar-inner">
         <a href="/" class="link  color-red" title="Home"><i class="material-icons-outlined">home</i></a>
-        <a href="/profile/" class="link  color-red" title="Profile"><i class="material-icons-outlined">account_circle</i></a> 
+        <a href="/profile/" class="link  color-red" title="Profile"><i
+            class="material-icons-outlined">account_circle</i></a>
         <a href="/search/" class="link  color-red" title="Search"><i class="material-icons-outlined">search</i></a>
         <a href="#" class="link  color-red" title="Search"><i class="material-icons-outlined">favorite_border</i></a>
         <a href="/cart1/" class="link  color-red" title="Cart"><i class="material-icons-outlined">local_mall</i></a>
       </div>
     </div>
-  <div class="page-content">
-    <!-- Searchbar backdrop -->
-    <div class="searchbar-backdrop"></div>
-    <!-- hide-on-search element -->
-    <div class="block searchbar-hide-on-search">
-      <p>This block will be hidden on search. Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-    </div>
-    <!-- search target list -->
-    <div class="list simple-list search-list searchbar-found">
-      <ul>
-        <li class="item-content">
-          <div class="item-inner">
-            <div class="item-title">Acura</div>
-          </div>
-        </li>
-        <li class="item-content">
-          <div class="item-inner">
-            <div class="item-title">Audi</div>
-          </div>
-        </li>
-        <li class="item-content">
-          <div class="item-inner">
-            <div class="item-title">BMW</div>
-          </div>
-        </li>
-        <li class="item-content">
-          <div class="item-inner">
-            <div class="item-title">Volvo</div>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <!-- Nothing found message -->
-    <div class="block searchbar-not-found">
-      <div class="block-inner">Nothing found</div>
+    <div class="page-content">
+      <!-- Searchbar backdrop -->
+      <div class="searchbar-backdrop"></div>
+      <!-- hide-on-search element -->
+      <div class="block searchbar-hide-on-search">
+        <p>Search Products</p>
+      </div>
+      <!-- search target list -->
+      <div class="list simple-list search-list searchbar-found">
+        <ul id="searchList">
+
+        </ul>
+      </div>
+      <!-- Nothing found message -->
+      <div class="block searchbar-not-found">
+        <div class="block-inner">Nothing found</div>
+      </div>
     </div>
   </div>
-</div>
+</template>
+<script>
+  return {
+    // Page Events
+    on: {
+      pageInit: function (e, page) {
+        var searchbar = app.searchbar.create({
+          el: '.searchbar',
+          searchContainer: '.list',
+          searchIn: '.item-title',
+          on: {
+            search(sb, query, previousQuery) {
+              if (query != "") {
+                $.ajax({
+                  type: "post",
+                  url: url + "search",
+                  data: { query: query },
+                  dataType: "json"
+                }).done(rply => {
+                  console.log(rply)
+                  let searchItem = ``
+                  for (list in rply.searchResult) {
+                    searchItem += `<li class="item-content">
+                    <div class="item-inner">
+                      <a class="link" href="/product-details/${rply.searchResult[list].product_id}/"><div class="item-title">${rply.searchResult[list].name}</div></a>
+                    </div>
+                  </li>`
+                  }
+                  $('#searchList').html(searchItem);
+                });
+              }
+
+            }
+          }
+        });
+      },
+    }
+  }
+</script>
