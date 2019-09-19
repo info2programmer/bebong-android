@@ -187,7 +187,7 @@ var phonegapApp = {
       let offerdata = ''
       for (list in rply.offer) {
         offerdata += `<div class="block" style="margin:10px 0px 0px 0px;">
-                        <a href="#"><img src="https://www.bebongstore.com/uploads/offer/${rply.offer[list].offer_image}" style="width:100%;"></a>
+                        <a href="/offer-listing/${rply.offer[list].id}/"><img src="https://www.bebongstore.com/uploads/offer/${rply.offer[list].offer_image}" style="width:100%;"></a>
                       </div>`
       }
       $('#homeoffer').html(offerdata);
@@ -992,6 +992,83 @@ var phonegapApp = {
         app.dialog.alert('Order Placed Successfully')
         app.popup.open('.success-order-popup')
       }
+    });
+  },
+  
+  // This Function For Gte Offer Items
+  OfferProducts : function(offerId){
+    $.ajax({
+      type: "post",
+      url: url + "offerProduct",
+      data: {offerId : offerId},
+      dataType: "json",
+      beforeSend: function () {
+        app.preloader.show()
+      }
+    }).done(rply => {
+      $('#lblProductCount').html(rply.productCount);
+      if (rply.product.length > 0) {
+        $('#productMsgOffer').hide();
+
+        let productList = ''
+        for (list in rply.product) {
+          productList += `<div class="col-50">
+          <a href="/product-details/${rply.product[list].product_id}/" class="color-black"
+            ><img
+              src="https://www.bebongstore.com/bebong2019/uploads/product/${rply.product[list].gallery_image}"
+              style="width:100%; border-radius:4px;"
+            /><br />
+            <span style="font-size:12px;">${rply.product[list].name}</span><br />
+            <p style="font-size:12px; font-weight:900; margin-top: -2px;">
+              Rs. ${rply.product[list].discounted_price}&nbsp;&nbsp;<span
+                style="text-decoration:line-through; color:#999999; font-size:12px;"
+                >Rs. ${rply.product[list].price}</span
+              >
+            </p></a>
+        </div>`
+        }
+        $('#productsListOffer').html(productList);
+        $('#lblOfferName').html(rply.categoryDetails.description);
+        $('#txtOfferId').val(rply.categoryDetails.id);
+
+        let size = ''
+        for (list in rply.sizeLists) {
+          size += `<li>
+            <label class="item-checkbox item-content">
+              <input type="checkbox" name="size[]" value="${rply.sizeLists[list].attribute_details_id}" />
+              <i class="icon icon-checkbox"></i>
+              <div class="item-inner">
+                <div class="item-title">${rply.sizeLists[list].attribute_detail}</div>
+              </div>
+            </label>
+          </li>`
+        }
+        $('#sizeList').html(size);
+
+        let color = ''
+        for (list in rply.colorList) {
+          color += `<li>
+            <label class="item-checkbox item-content">
+              <input type="checkbox" name="color[]" value="${rply.colorList[list].attribute_details_id}" />
+              <i class="icon icon-checkbox"></i>
+              <div class="item-inner">
+                <div class="item-title">${rply.colorList[list].attribute_detail}</div>
+              </div>
+            </label>
+          </li>`
+        }
+        $('#colorList').html(color);
+
+        // $('.price-value').html(`Rs.0 - Rs.${rply.maxPrice.price}`);
+        // $('#price-filter').attr({'data-max' : `${rply.maxPrice.price}`, 'data-value-right' : `${rply.maxPrice.price}`});
+
+
+        return
+      }
+      else {
+        $('#productMsg').html(`No Product Found`);
+      }
+      app.preloader.hide()
     });
   }
 

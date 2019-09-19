@@ -122,6 +122,33 @@ routes = [
     },
   },
   {
+    path: '/offer-listing/:offerId/',
+    async: function (routeTo, routeFrom, resolve, reject) {
+      // Router instance
+      var router = this;
+
+      // App instance
+      var app = router.app;
+
+      // Show Preloader
+      app.preloader.show('multi');
+
+      // User ID from request
+      var offerId = routeTo.params.offerId;
+
+      // Simulate Ajax Request
+      setTimeout(function () {
+        phonegapApp.OfferProducts(offerId)
+        app.preloader.hide();
+        resolve(
+          {
+            componentUrl: './pages/offer-listing.html',
+          }
+        );
+      }, 1000);
+    },
+  },
+  {
     path: '/cart1/',
     async: function (routeTo, routeFrom, resolve, reject) {
       var router = this;
