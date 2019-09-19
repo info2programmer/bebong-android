@@ -782,10 +782,125 @@
                 </li>
               </ul>
             </div>
-            <div class="row">
-              <div class="col"><button onclick="phonegapApp.handelAddNewAddress()" class="col button button-fill">Save Address</button></div>
+            <div class="block">
+              <div class="col"><button onclick="phonegapApp.handelAddNewAddress()" class="col button button-fill">Save
+                  Address</button></div>
             </div>
-            
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- This Section For Select Address For Checkout -->
+    <div class="popup checkout-address-popup">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title">Manage Address</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <a class="link popup-close color-red">Close</a>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="block-title">
+              <a onclick="phonegapApp.openManageAddressModal()" class="popup-open color-red link">Add New Address</a>
+            </div>
+            <div class="list media-list">
+              <ul id="checkoutAddressList">
+
+              </ul>
+            </div>
+            <div class="block">
+              <button class="button button-raised button-fill"
+                onclick=phonegapApp.openPaymentGatewayModal()>CONTINUE</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- This Section For Select Payment Mode -->
+    <div class="popup checkout-payment-option-popup">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title">Select Payment Mode</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <a class="link popup-close color-red">Close</a>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="list media-list">
+              <ul id="paymentOptionList" onchange=phonegapApp.getFinalAmount()>
+
+              </ul>
+            </div>
+            <div class="block">
+              <button class="button button-raised button-fill" id="btnCheckout"
+                onclick=phonegapApp.sendPayment()>CHECKOUT</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- This Section For Successs Payment Order Success -->
+    <div class="popup success-order-popup">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title">Payment Success</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <a class="link popup-close color-red">Close</a>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="block-title" style="color:#00CC00; text-align:center;">
+              <p style="font-size:30px;">Congratulation !</p>
+              Your order has been successfully placed<br />
+              <i class="material-icons" style="font-size:40px;">verified_user</i>
+
+              <div style="margin-top:12px; margin-bottom:6px;">
+                <a href="/profile/" class="button button-raised button-fill">View Order Details</a>
+              </div>
+
+              <div style="margin-top:12px; margin-bottom:6px;">
+                <img src="../image-bebong/logo-bebong.png" style="opacity:.3;" />
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- This Section For Successs Payment Order Cancel -->
+    <div class="popup cancel-order-popup">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-inner">
+              <div class="title">Payment Cancel</div>
+              <div class="right">
+                <!-- Link to close popup -->
+                <a class="link popup-close color-red">Close</a>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="block-title" style="color:#00CC00; text-align:center;">
+              <p>Payment Cancel</p>
+            </div>
           </div>
         </div>
       </div>

@@ -521,12 +521,12 @@ var phonegapApp = {
     }).done(rply => {
       app.preloader.hide()
       console.log(rply)
-      if(!rply.status){
+      if (!rply.status) {
         $('#cartPageContent').html(`<div class="block"><img src ="img/bebong-empty-cart.gif" width="100%"></div>`);
         return;
       }
       let itemList = ``
-      for(list in rply.cartItems){
+      for (list in rply.cartItems) {
         itemList += `<div class="row" style="margin-bottom:12px;">
         <div class="col-25">
           <img src="https://www.bebongstore.com/uploads/product/${rply.cartItems[list].gallery_image}" width="100%;" />
@@ -555,12 +555,19 @@ var phonegapApp = {
       $('#lblNetTotal').html(rply.grand_total);
 
       let couponCode = ''
-      for(list in rply.offers){
+      for (list in rply.offers) {
+
         couponCode += `<li>
-        <label class="item-radio item-content">
-          <input type="radio" name="demo-radio" value="coupon1" onclick="phonegapApp.applyCouponCode(${rply.offers[list].id})" />
-          <i class="icon icon-radio"></i>
-          <div class="item-inner">
+        <label class="item-radio item-content">`
+        if (rply.offers[list].id == rply.offerId) {
+          couponCode += `<input type="radio" name="demo-radio" class="cuponCheck" value="coupon1" onclick="phonegapApp.applyCouponCode(${rply.offers[list].id})" checked />
+          <i class="icon icon-radio cuponCheck-icon" checked></i>`
+        }
+        else {
+          couponCode += `<input type="radio" name="demo-radio" class="cuponCheck" value="coupon1" onclick="phonegapApp.applyCouponCode(${rply.offers[list].id})" />
+          <i class="icon icon-radio cuponCheck-icon"></i>`
+        }
+        couponCode += `<div class="item-inner">
             <div class="item-title" style="border: 1px #666 dashed; padding: 0px 10px;width: 100%;">${rply.offers[list].offer_name}<p
                 style="font-size:10px; margin-bottom:2px; margin-top:2px;">${rply.offers[list].description}</p>
             </div>
@@ -628,13 +635,13 @@ var phonegapApp = {
       for (list in rply.previousOrederDetailsAndItems) {
         previousOrderList += `<li class="accordion-item"><a href="#" class="item-content item-link">
                               <div class="item-inner">`
-                              if(rply.previousOrederDetailsAndItems[list].order_status == 5){
-                                previousOrderList += `<div class="item-title text-color-red">`
-                              }
-                              else{
-                                previousOrderList += `<div class="item-title text-color-green">`
-                              }
-                                 previousOrderList += ` Order Id : <span>${rply.previousOrederDetailsAndItems[list].order_no}</span> / <span>${rply.previousOrederDetailsAndItems[list].payment_method}</span>
+        if (rply.previousOrederDetailsAndItems[list].order_status == 5) {
+          previousOrderList += `<div class="item-title text-color-red">`
+        }
+        else {
+          previousOrderList += `<div class="item-title text-color-green">`
+        }
+        previousOrderList += ` Order Id : <span>${rply.previousOrederDetailsAndItems[list].order_no}</span> / <span>${rply.previousOrederDetailsAndItems[list].payment_method}</span>
                                 </div>
                               </div>
                             </a>
@@ -664,7 +671,7 @@ var phonegapApp = {
   },
 
   // This section for Add New Address
-  handelAddNewAddress: function () {
+  handelAddNewAddress: function (type = 'user') {
     let houseNo = $('#txtAddressHouseNo').val();
     let shippingAddress = $('#txtAddressShipping').val();
     let locality = $('#txtAddressLocality').val();
@@ -697,14 +704,16 @@ var phonegapApp = {
           closeTimeout: 2000,
         });
         toastLargeMessage.open()
-        phonegapApp.userDetails()
+        if (type == 'user') {
+          phonegapApp.userDetails()
+        }
         app.popup.close(".address-popup")
       }
     });
   },
 
   // This Section For Open Cancel Module
-  openCancelRequest : function(orderId){
+  openCancelRequest: function (orderId) {
     app.actions.create({
       buttons: [
         {
@@ -713,9 +722,9 @@ var phonegapApp = {
             $.ajax({
               type: "post",
               url: url + "cancelOrder",
-              data: {orderId : orderId , reason : 'Size mismatch'},
+              data: { orderId: orderId, reason: 'Size mismatch' },
               dataType: "json"
-            }).done(rply=>{
+            }).done(rply => {
               let toastLargeMessage = app.toast.create({
                 text: 'Order canceled successfully',
                 closeTimeout: 2000,
@@ -731,9 +740,9 @@ var phonegapApp = {
             $.ajax({
               type: "post",
               url: url + "cancelOrder",
-              data: {orderId : orderId , reason : 'Size mismatch'},
+              data: { orderId: orderId, reason: 'Size mismatch' },
               dataType: "json"
-            }).done(rply=>{
+            }).done(rply => {
               let toastLargeMessage = app.toast.create({
                 text: 'Order canceled successfully',
                 closeTimeout: 2000,
@@ -749,9 +758,9 @@ var phonegapApp = {
             $.ajax({
               type: "post",
               url: url + "cancelOrder",
-              data: {orderId : orderId , reason : 'Size mismatch'},
+              data: { orderId: orderId, reason: 'Size mismatch' },
               dataType: "json"
-            }).done(rply=>{
+            }).done(rply => {
               let toastLargeMessage = app.toast.create({
                 text: 'I changed my mind',
                 closeTimeout: 2000,
@@ -767,62 +776,235 @@ var phonegapApp = {
         },
       ]
     }).open()
-    
+
   },
 
   // This Function For Delete Cart Item
-  deleteCartItem : function (productId,attributeId){
-    if(confirm('are you sure to delete this product?')){
+  deleteCartItem: function (productId, attributeId) {
+    if (confirm('are you sure to delete this product?')) {
       $.ajax({
         type: "post",
         url: url + "deleteCartItem",
-        data: {productId : productId, attributeId : attributeId, userPhone: localStorage.getItem('bebongUser')},
+        data: { productId: productId, attributeId: attributeId, userPhone: localStorage.getItem('bebongUser') },
         dataType: "json"
-      }).done(rply=>{
+      }).done(rply => {
         console.log(rply)
       });
     }
-    
+
   },
   // This Section For Apply Coupon Code
-  applyCouponCode : function(couponId){
+  applyCouponCode: function (couponId) {
     $.ajax({
       type: "post",
       url: url + "applyCouponCode",
-      data: {couponId : couponId, userPhone : localStorage.getItem('bebongUser')},
+      data: { couponId: couponId, userPhone: localStorage.getItem('bebongUser') },
       dataType: "json",
-      beforeSend : function(){
+      beforeSend: function () {
         app.preloader.show();
       }
-    }).done(rply=>{
+    }).done(rply => {
       app.preloader.hide();
+      let toastLargeMessage = app.toast.create({
+        text: `${rply.msg}`,
+        closeTimeout: 2000,
+      });
+      toastLargeMessage.open()
+      phonegapApp.getCartItems()
+    });
+  },
+
+  // This Section For Open Address Section
+  openAddressModal: function () {
+    $.ajax({
+      type: "post",
+      url: url + "getAddressList",
+      data: { userPhone: localStorage.getItem('bebongUser') },
+      dataType: "json",
+      beforeSend: function () {
+        app.preloader.show('multi')
+      }
+    }).done(rply => {
+      app.preloader.hide()
       console.log(rply)
+      let address = ''
+      for (list in rply.addressList) {
+        address += `<li>
+          <label class="item-radio item-content">
+            <input type="radio" name="redio-select-checkout-address" class="checkout-address" value="${rply.addressList[list].cust_detail_id}" />
+            <i class="icon icon-radio"></i>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-title">${rply.addressList[list].address_type}</div>
+              </div>
+              <div class="item-subtitle">${rply.addressList[list].houseNo} ${rply.addressList[list].localArea} ${rply.addressList[list].address}</div>
+              <div class="item-text">Pincode -  ${rply.addressList[list].pincode}</div>
+            </div>
+          </label>  
+        </li>`
+
+      }
+      $('#checkoutAddressList').html(address);
+      app.popup.open('.checkout-address-popup')
+    });
+  },
+
+  // This Section For Open Create Modal Section
+  openManageAddressModal: function () {
+    app.popup.close('.checkout-address-popup')
+    app.popup.open('.address-popup')
+  },
+
+  // This Function For Continue Order
+  openPaymentGatewayModal: function () {
+    // let selectedAddress = $('.checkout-address').val();
+    let selectedAddress = $("input[name='redio-select-checkout-address']:checked").val();
+    if (selectedAddress == undefined) {
+      let toastLargeMessage = app.toast.create({
+        text: `Select Address First`,
+        closeTimeout: 2000,
+      });
+      toastLargeMessage.open()
+      return
+    }
+
+    // Check Coupon Applyed Or Not
+    $.ajax({
+      type: "post",
+      url: url + "checkCouponStatus",
+      data: { userPhone: localStorage.getItem('bebongUser') },
+      dataType: "json",
+      beforeSend: function () {
+        app.preloader.show('multi')
+      }
+    }).done(rply => {
+      app.preloader.hide()
+      console.log(rply)
+      let paymentList = ''
+      if (rply.status) {
+        paymentList = `<li>
+          <label class="item-radio item-content">
+            <input type="radio" name="redio-select-payment-option" class="checkout-address" value="1" checked />
+            <i class="icon icon-radio" checked></i>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-title">Online</div>
+              </div>
+            </div>
+          </label>  
+        </li>`
+      }
+      else {
+        paymentList = `<li>
+          <label class="item-radio item-content">
+            <input type="radio" name="redio-select-payment-option" class="checkout-address" value="1" checked />
+            <i class="icon icon-radio" checked></i>
+            <div class="item-inner">
+              <div class="item-title-row">
+                <div class="item-title">Online</div>
+              </div>
+            </div>
+          </label>  
+        </li><li>
+        <label class="item-radio item-content">
+          <input type="radio" name="redio-select-payment-option" class="checkout-address" value="2" />
+          <i class="icon icon-radio"></i>
+          <div class="item-inner">
+            <div class="item-title-row">
+              <div class="item-title">Cash On Delivery</div>
+            </div>
+          </div>
+        </label>  
+      </li>`
+      }
+      $('#paymentOptionList').html(paymentList);
+      app.popup.open('.checkout-payment-option-popup')
+    });
+  },
+
+  // This Function For Get Final Amount
+  getFinalAmount: function () {
+    let paymentMode = $("input[name='redio-select-payment-option']:checked").val();
+    $.ajax({
+      type: "post",
+      url: url + "getFinalAmount",
+      data: { userPhone: localStorage.getItem('bebongUser'), paymentMode: paymentMode },
+      dataType: "json",
+      beforeSend: function () {
+        app.preloader.show('multi')
+      }
+    }).done(rply => {
+      console.log(rply)
+      app.preloader.hide()
+    });
+  },
+
+  // This Section For Payment Option
+  sendPayment: function () {
+    let selectedAddress = $("input[name='redio-select-checkout-address']:checked").val();
+    let paymentMode = $("input[name='redio-select-payment-option']:checked").val();
+
+    // If paymentMode == 1 Then This is a online order else This is a Cash On Delivery Order
+
+    $.ajax({
+      type: "post",
+      url: url + "confirmOrder",
+      data: { address: selectedAddress, paymentMode: paymentMode, userPhone: localStorage.getItem('bebongUser') },
+      dataType: "json",
+      beforeSend: function () {
+        app.preloader.show("multi")
+      }
+    }).done(rply => {
+      app.preloader.hide()
+      console.log(rply)
+      if (rply.pMode == "ONLINE") {
+        let ref = cordova.InAppBrowser.open(rply.url, '_blank', 'location=no');
+
+        ref.addEventListener('loadstop', function (event) {
+          let urlSuccessPage = "https://bebongstore.com/manage_api/OnlineSuccessPay";
+          let urlErrorPage = "http://www.guru-siksha.com/OnlineFailurePay";
+          if (event.url == urlSuccessPage) {
+            ref.close()
+            phonegapApp.getCartItems()
+            app.dialog.alert('Order Placed Successfully')
+            app.popup.open('.success-order-popup')
+            // cartView.router.navigate('/payment-success/' + rply.oid + '/');
+
+          }
+          else if (event.url == urlErrorPage) {
+            ref.close()
+            phonegapApp.getCartItems()
+            app.dialog.alert('Payment Not Done')
+            app.popup.open('.cancel-order-popup')
+          }
+        });
+      }
     });
   }
 
 
 };
 
-function swipperminus(productId,attributeId){
+function swipperminus(productId, attributeId) {
   let curretn_value = $('#product-' + productId + "-" + attributeId).val();
   if (curretn_value != 1) {
-      curretn_value = parseInt(curretn_value) - 1;
+    curretn_value = parseInt(curretn_value) - 1;
   }
-  else{
+  else {
     curretn_value = 1
   }
-  
+
   $.ajax({
     type: "post",
     url: url + "addToCart",
-    data: {productSize: attributeId, productId: productId, qty: curretn_value, userPhone: localStorage.getItem('bebongUser')},
+    data: { productSize: attributeId, productId: productId, qty: curretn_value, userPhone: localStorage.getItem('bebongUser') },
     dataType: "json",
     beforeSend: function () {
       app.preloader.show("multi")
     }
-  }).done(rply =>{
+  }).done(rply => {
     app.preloader.hide()
-    if(rply.status){
+    if (rply.status) {
       let toastLargeMessage = app.toast.create({
         text: `${rply.msg}`,
         closeTimeout: 2000,
@@ -831,35 +1013,35 @@ function swipperminus(productId,attributeId){
       $('#product-' + productId + "-" + attributeId).val(curretn_value);
       phonegapApp.getCartItems()
     }
-    else{
+    else {
       let toastLargeMessage = app.toast.create({
         text: `${rply.msg}`,
         closeTimeout: 2000,
       });
       toastLargeMessage.open()
     }
-    
+
   });
- 
+
 }
 
 function swipperadd(productId, attributeId) {
-  
+
   let curretn_value = $('#product-' + productId + "-" + attributeId).val();
   curretn_value = parseInt(curretn_value) + 1;
-  
+
 
   $.ajax({
     type: "post",
     url: url + "addToCart",
-    data: {productSize: attributeId, productId: productId, qty: curretn_value, userPhone: localStorage.getItem('bebongUser')},
+    data: { productSize: attributeId, productId: productId, qty: curretn_value, userPhone: localStorage.getItem('bebongUser') },
     dataType: "json",
     beforeSend: function () {
       app.preloader.show("multi")
     }
-  }).done(rply =>{
+  }).done(rply => {
     app.preloader.hide()
-    if(rply.status){
+    if (rply.status) {
       let toastLargeMessage = app.toast.create({
         text: `${rply.msg}`,
         closeTimeout: 2000,
@@ -868,13 +1050,13 @@ function swipperadd(productId, attributeId) {
       $('#product-' + productId + "-" + attributeId).val(curretn_value);
       phonegapApp.getCartItems()
     }
-    else{
+    else {
       let toastLargeMessage = app.toast.create({
         text: `${rply.msg}`,
         closeTimeout: 2000,
       });
       toastLargeMessage.open()
     }
-    
+
   });
 }
