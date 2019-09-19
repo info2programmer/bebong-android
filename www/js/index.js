@@ -881,7 +881,7 @@ var phonegapApp = {
       app.preloader.hide()
       console.log(rply)
       let paymentList = ''
-      if (rply.status) {
+      if (rply.status == "1") {
         paymentList = `<li>
           <label class="item-radio item-content">
             <input type="radio" name="redio-select-payment-option" class="checkout-address" value="1" checked />
@@ -918,6 +918,7 @@ var phonegapApp = {
       </li>`
       }
       $('#paymentOptionList').html(paymentList);
+      $("#btnCheckout").html(`Pay Online | ${rply.cart_total}`)
       app.popup.open('.checkout-payment-option-popup')
     });
   },
@@ -935,6 +936,13 @@ var phonegapApp = {
       }
     }).done(rply => {
       console.log(rply)
+      if(paymentMode == 1){
+        $("#btnCheckout").html(`Pay Online | ${rply.cart_total}`)
+      }
+      else{
+        $("#btnCheckout").html(`Cash On Delivery | ${rply.cart_total}`)
+      }
+      
       app.preloader.hide()
     });
   },
@@ -978,6 +986,11 @@ var phonegapApp = {
             app.popup.open('.cancel-order-popup')
           }
         });
+      }
+      else{
+        phonegapApp.getCartItems()
+        app.dialog.alert('Order Placed Successfully')
+        app.popup.open('.success-order-popup')
       }
     });
   }
