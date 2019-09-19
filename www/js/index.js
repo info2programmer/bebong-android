@@ -970,7 +970,7 @@ var phonegapApp = {
 
         ref.addEventListener('loadstop', function (event) {
           let urlSuccessPage = "https://bebongstore.com/manage_api/OnlineSuccessPay";
-          let urlErrorPage = "http://www.guru-siksha.com/OnlineFailurePay";
+          let urlErrorPage = "https://bebongstore.com/manage_api/OnlineFailurePay";
           if (event.url == urlSuccessPage) {
             ref.close()
             phonegapApp.getCartItems()
