@@ -788,7 +788,7 @@ var phonegapApp = {
         data: { productId: productId, attributeId: attributeId, userPhone: localStorage.getItem('bebongUser') },
         dataType: "json"
       }).done(rply => {
-        console.log(rply)
+        phonegapApp.getCartItems()
       });
     }
 
