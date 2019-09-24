@@ -273,7 +273,7 @@ var phonegapApp = {
           productList += `<div class="col-50">
           <a href="/product-details/${rply.product[list].product_id}/" class="color-black"
             ><img
-              src="https://www.bebongstore.com/bebong2019/uploads/product/${rply.product[list].gallery_image}"
+              src="https://www.bebongstore.com/uploads/product/${rply.product[list].gallery_image}"
               style="width:100%; border-radius:4px;"
             /><br />
             <span style="font-size:12px;">${rply.product[list].name}</span><br />
@@ -361,7 +361,7 @@ var phonegapApp = {
         productList += `<div class="col-50">
         <a href="/product-details/${rply.product[list].product_id}/" class="color-black"
           ><img
-            src="https://www.bebongstore.com/bebong2019/uploads/product/${rply.product[list].gallery_image}"
+            src="https://www.bebongstore.com/uploads/product/${rply.product[list].gallery_image}"
             style="width:100%; border-radius:4px;"
           /><br />
           <span style="font-size:12px;">${rply.product[list].name}</span><br />
@@ -1015,7 +1015,7 @@ var phonegapApp = {
           productList += `<div class="col-50">
           <a href="/product-details/${rply.product[list].product_id}/" class="color-black"
             ><img
-              src="https://www.bebongstore.com/bebong2019/uploads/product/${rply.product[list].gallery_image}"
+              src="https://www.bebongstore.com/uploads/product/${rply.product[list].gallery_image}"
               style="width:100%; border-radius:4px;"
             /><br />
             <span style="font-size:12px;">${rply.product[list].name}</span><br />
