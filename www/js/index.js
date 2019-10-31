@@ -11,7 +11,7 @@ var phonegapApp = {
   },
 
   onDeviceReady: function () {
-    phonegapApp.chekcLogin();
+    // phonegapApp.chekcLogin();
   },
 
   // This Function For Check Logoin
@@ -465,6 +465,11 @@ var phonegapApp = {
 
   //This Function For Add Item To The Cart
   addToCart: function (productId) {
+    if( localStorage.getItem("bebongUserLogin") == null){
+      app.loginScreen.open("#my-login-screen");
+      app.preloader.hide();
+      return
+    }
     let productSize = $('#ddlSizeCart').val();
     console.log(productSize)
     if (productSize === null) {

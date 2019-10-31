@@ -57,6 +57,11 @@ routes = [
 
       // Simulate Ajax Request
       setTimeout(function () {
+        if( localStorage.getItem("bebongUserLogin") == null){
+          app.loginScreen.open("#my-login-screen");
+          app.preloader.hide();
+          return
+        }
         phonegapApp.userDetails()
         app.preloader.hide();
         resolve(
@@ -157,6 +162,11 @@ routes = [
 
       // Simulate Ajax Request
       setTimeout(function () {
+        if( localStorage.getItem("bebongUserLogin") == null){
+          app.loginScreen.open("#my-login-screen");
+          app.preloader.hide();
+          return
+        }
         phonegapApp.getCartItems()
         app.preloader.hide();
         resolve(
